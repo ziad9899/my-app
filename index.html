@@ -45,11 +45,27 @@
         font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.5px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .app-title:hover {
+        background-color: rgba(255, 255, 255, 0.1);
     }
 
     .middle-section {
         font-size: 14px;
         font-weight: 600;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .middle-section:hover {
+        background-color: rgba(255, 255, 255, 0.1);
     }
 
     .right-section {
@@ -64,6 +80,47 @@
         gap: 8px;
         font-size: 14px;
         font-weight: 600;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .timer:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .timer.warning {
+        color: #FFA500;
+    }
+
+    .timer.critical {
+        color: #FF4444;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    .timer-icon {
+        width: 16px;
+        height: 16px;
+        border: 2px solid white;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .timer-icon::after {
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 5px;
+        width: 1px;
+        height: 5px;
+        background-color: white;
+        transform-origin: bottom;
     }
 
     .control-btn {
@@ -183,25 +240,6 @@
         font-size: 14px;
     }
 
-    .toolbar {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .tool-icon {
-        width: 36px;
-        height: 36px;
-        background: #5B9BD5;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: white;
-        font-size: 16px;
-    }
-
     .question-content {
         margin-top: 32px;
     }
@@ -212,6 +250,40 @@
         font-weight: 500;
         margin-bottom: 8px;
         line-height: 1.5;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .question-text:hover {
+        background-color: #F9FAFB;
+    }
+
+    .question-text.editing {
+        background: #F8F9FA;
+        border: 2px solid #28A745;
+        outline: none;
+    }
+
+    .editable-input {
+        width: 100%;
+        font-size: 18px;
+        color: #1F2937;
+        font-weight: 500;
+        line-height: 1.5;
+        border: 2px solid #28A745;
+        border-radius: 4px;
+        padding: 8px;
+        background: #F8F9FA;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 50px;
+    }
+
+    .editable-input:focus {
+        outline: none;
+        border-color: #20C645;
     }
 
     .answers-label {
@@ -230,7 +302,7 @@
     .option {
         background: white;
         border: 1px solid #E5E7EB;
-        border-radius: 8px;
+        border-radius: 50px;
         padding: 16px 20px;
         cursor: pointer;
         display: flex;
@@ -238,6 +310,7 @@
         justify-content: space-between;
         transition: all 0.2s;
         min-height: 60px;
+        position: relative;
     }
 
     .option:hover {
@@ -250,34 +323,56 @@
         background-color: #F0F7FF;
     }
 
+    .option.editing {
+        border-color: #28A745;
+        background-color: #F8FFF8;
+    }
+
     .option-content {
         display: flex;
         align-items: center;
         gap: 16px;
+        flex: 1;
     }
 
     .option-letter {
-        width: 24px;
-        height: 24px;
-        background-color: #F3F4F6;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 16px;
         color: #6B7280;
+        flex-shrink: 0;
+        min-width: 20px;
     }
 
     .option.selected .option-letter {
-        background-color: #5B9BD5;
-        color: white;
+        color: #5B9BD5;
     }
 
     .option-text {
         font-size: 16px;
         color: #1F2937;
         line-height: 1.4;
+        flex: 1;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .option-text:hover {
+        background-color: #F9FAFB;
+    }
+
+    .option-text.editing {
+        background: #F8F9FA;
+        border: 2px solid #28A745;
+        padding: 8px;
+        outline: none;
+        font-family: inherit;
+        font-size: 16px;
+        color: #1F2937;
+        line-height: 1.4;
+        width: 100%;
+        border-radius: 4px;
     }
 
     .option-icon {
@@ -362,19 +457,180 @@
         background-color: #5B9BD5;
         transition: width 0.3s ease;
     }
+
+    .edit-hint {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        background: rgba(40, 167, 69, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 500;
+        z-index: 1000;
+        display: none;
+        pointer-events: none;
+    }
+
+    .edit-hint.show {
+        display: block;
+        animation: fadeInOut 2s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0; }
+        20%, 80% { opacity: 1; }
+    }
+
+    .save-edit-btn {
+        background: #28A745;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        margin-left: 8px;
+    }
+
+    .save-edit-btn:hover {
+        background: #218838;
+    }
+
+    .cancel-edit-btn {
+        background: #DC3545;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        margin-left: 4px;
+    }
+
+    .cancel-edit-btn:hover {
+        background: #C82333;
+    }
+
+    .top-editable-input {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: inherit;
+        letter-spacing: 0.5px;
+    }
+
+    .top-editable-input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .top-middle-input {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: inherit;
+        text-align: center;
+        min-width: 250px;
+    }
+
+    .top-middle-input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .timer-input {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: inherit;
+        text-align: center;
+        width: 80px;
+    }
+
+    .timer-input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .timer.edit-flash {
+        animation: timerEditFlash 0.5s ease-in-out;
+    }
+
+    @keyframes timerEditFlash {
+        0%, 100% { background-color: rgba(255, 255, 255, 0.1); }
+        50% { background-color: rgba(59, 130, 246, 0.3); }
+    }
+
+    .time-up-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .time-up-message {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .time-up-message h2 {
+        color: #DC3545;
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    .time-up-message p {
+        color: #6B7280;
+        font-size: 16px;
+    }
   </style>
 </head>
 
 <body>
+<div class="edit-hint" id="edit-hint">Double-click to edit text</div>
+
+<div class="time-up-overlay" id="time-up-overlay">
+  <div class="time-up-message">
+    <h2>⏰ انتهى الوقت!</h2>
+    <p>لقد انتهى وقت الاختبار</p>
+  </div>
+</div>
+
 <div class="top-bar">
   <div class="left-section">
-    <div class="app-title">DMALFOY DRACO MALFOY</div>
+    <div class="app-title" id="app-title">DMALFOY DRACO MALFOY</div>
   </div>
-  <div class="middle-section">EXAMPLIFY UPDATED SCREENS TEST</div>
+  <div class="middle-section" id="middle-title">EXAMPLIFY UPDATED SCREENS TEST</div>
   <div class="right-section">
-    <div class="timer">
-      <span>🕒</span>
-      <span id="timer-display">00:36:22</span>
+    <div class="timer" id="timer-container">
+      <div class="timer-icon"></div>
+      <span id="timer-display">01:15:00</span>
     </div>
     <button class="control-btn dropdown">EXAM CONTROLS</button>
     <button class="control-btn">TOOL KIT ⋮</button>
@@ -392,10 +648,6 @@
       <div class="question-info">
         <div class="question-number" id="question-title">Question # 1 of 45</div>
         <button class="expand-btn">^</button>
-      </div>
-      <div class="toolbar">
-        <div class="tool-icon">🧮</div>
-        <div class="tool-icon">📝</div>
       </div>
     </div>
 
@@ -426,8 +678,9 @@
   const examData = {
       examTitle: "EXAMPLIFY UPDATED SCREENS TEST",
       version: "5.0",
-      durationSeconds: 2182,
-      questions: []
+      durationSeconds: 4500,
+      questions: [],
+      appTitle: "DMALFOY DRACO MALFOY"
   };
 
   for (let i = 1; i <= 45; i++) {
@@ -448,6 +701,11 @@
   let currentQuestionIndex = 0;
   let remainingSeconds = examData.durationSeconds;
   let timerInterval;
+  let editingQuestion = false;
+  let editingOption = -1;
+  let editingTopTitle = false;
+  let editingMiddleTitle = false;
+  let editingTimer = false;
 
   document.addEventListener('DOMContentLoaded', function() {
       loadState();
@@ -455,7 +713,18 @@
       displayCurrentQuestion();
       startTimer();
       setupEventListeners();
+      showEditHint();
   });
+
+  function showEditHint() {
+      setTimeout(() => {
+          const hint = document.getElementById('edit-hint');
+          hint.classList.add('show');
+          setTimeout(() => {
+              hint.classList.remove('show');
+          }, 2000);
+      }, 1000);
+  }
 
   function loadState() {
       const saved = localStorage.getItem('examState');
@@ -465,10 +734,14 @@
               if (state.version === examData.version) {
                   currentQuestionIndex = state.currentIndex || 0;
                   remainingSeconds = state.remainingSeconds || examData.durationSeconds;
+                  if (state.appTitle) examData.appTitle = state.appTitle;
+                  if (state.examTitle) examData.examTitle = state.examTitle;
                   if (state.questions) {
                       state.questions.forEach((q, index) => {
                           if (examData.questions[index]) {
                               examData.questions[index].selectedIndex = q.selectedIndex;
+                              if (q.prompt) examData.questions[index].prompt = q.prompt;
+                              if (q.choices) examData.questions[index].choices = q.choices;
                           }
                       });
                   }
@@ -477,6 +750,8 @@
               console.error('Error loading state:', e);
           }
       }
+      document.getElementById('app-title').textContent = examData.appTitle;
+      document.getElementById('middle-title').textContent = examData.examTitle;
   }
 
   function saveState() {
@@ -484,8 +759,12 @@
           version: examData.version,
           currentIndex: currentQuestionIndex,
           remainingSeconds: remainingSeconds,
+          appTitle: examData.appTitle,
+          examTitle: examData.examTitle,
           questions: examData.questions.map(q => ({
-              selectedIndex: q.selectedIndex
+              selectedIndex: q.selectedIndex,
+              prompt: q.prompt,
+              choices: q.choices
           }))
       };
       localStorage.setItem('examState', JSON.stringify(state));
@@ -534,7 +813,7 @@
           optionDiv.innerHTML = `
               <div class="option-content">
                   <div class="option-letter">${String.fromCharCode(65 + index)}</div>
-                  <div class="option-text">${choice}</div>
+                  <div class="option-text" data-option-index="${index}">${choice}</div>
               </div>
               <div class="option-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -543,13 +822,284 @@
                   </svg>
               </div>
           `;
-          optionDiv.addEventListener('click', () => selectOption(index));
+          optionDiv.addEventListener('click', (e) => {
+              if (editingOption === -1 && !e.target.classList.contains('option-text')) {
+                  selectOption(index);
+              }
+          });
           container.appendChild(optionDiv);
       });
       updateUI();
+      exitEditMode();
+  }
+
+  function exitEditMode() {
+      editingQuestion = false;
+      editingOption = -1;
+      editingTopTitle = false;
+      editingMiddleTitle = false;
+      editingTimer = false;
+      const questionText = document.getElementById('question-text');
+      if (questionText.classList.contains('editing')) {
+          questionText.classList.remove('editing');
+      }
+      document.querySelectorAll('.option').forEach(option => {
+          option.classList.remove('editing');
+      });
+      document.querySelectorAll('.editable-input, .top-editable-input, .top-middle-input, .timer-input').forEach(input => {
+          input.remove();
+      });
+      document.querySelectorAll('.save-edit-btn, .cancel-edit-btn').forEach(btn => {
+          btn.remove();
+      });
+  }
+
+  function parseTimeToSeconds(timeStr) {
+      const parts = timeStr.split(':');
+      if (parts.length === 3) {
+          const hours = parseInt(parts[0]) || 0;
+          const minutes = parseInt(parts[1]) || 0;
+          const seconds = parseInt(parts[2]) || 0;
+          return hours * 3600 + minutes * 60 + seconds;
+      }
+      return 0;
+  }
+
+  function editTimer() {
+      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
+      exitEditMode();
+      editingTimer = true;
+      const timerDisplay = document.getElementById('timer-display');
+      const currentText = timerDisplay.textContent;
+      const input = document.createElement('input');
+      input.className = 'timer-input';
+      input.type = 'text';
+      input.value = currentText;
+      input.placeholder = 'HH:MM:SS';
+      timerDisplay.parentNode.insertBefore(input, timerDisplay);
+      timerDisplay.style.display = 'none';
+      input.focus();
+      input.select();
+      const saveEdit = () => {
+          const newTime = input.value.trim();
+          if (newTime && /^\d{1,2}:\d{2}:\d{2}$/.test(newTime)) {
+              remainingSeconds = parseTimeToSeconds(newTime);
+              updateTimerDisplay();
+              saveState();
+          }
+          timerDisplay.style.display = 'inline';
+          input.remove();
+          editingTimer = false;
+          const timerContainer = document.getElementById('timer-container');
+          timerContainer.classList.add('edit-flash');
+          setTimeout(() => {
+              timerContainer.classList.remove('edit-flash');
+          }, 500);
+      };
+      const cancelEdit = () => {
+          timerDisplay.style.display = 'inline';
+          input.remove();
+          editingTimer = false;
+      };
+      input.addEventListener('blur', saveEdit);
+      input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              saveEdit();
+          } else if (e.key === 'Escape') {
+              e.preventDefault();
+              cancelEdit();
+          }
+      });
+  }
+
+  function editTopTitle() {
+      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
+      exitEditMode();
+      editingTopTitle = true;
+      const titleElement = document.getElementById('app-title');
+      const currentText = titleElement.textContent;
+      const input = document.createElement('input');
+      input.className = 'top-editable-input';
+      input.type = 'text';
+      input.value = currentText;
+      titleElement.parentNode.insertBefore(input, titleElement);
+      titleElement.style.display = 'none';
+      input.focus();
+      input.select();
+      const saveEdit = () => {
+          const newText = input.value.trim();
+          if (newText) {
+              examData.appTitle = newText;
+              titleElement.textContent = newText;
+              saveState();
+          }
+          titleElement.style.display = 'block';
+          input.remove();
+          editingTopTitle = false;
+      };
+      const cancelEdit = () => {
+          titleElement.style.display = 'block';
+          input.remove();
+          editingTopTitle = false;
+      };
+      input.addEventListener('blur', saveEdit);
+      input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              saveEdit();
+          } else if (e.key === 'Escape') {
+              e.preventDefault();
+              cancelEdit();
+          }
+      });
+  }
+
+  function editMiddleTitle() {
+      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
+      exitEditMode();
+      editingMiddleTitle = true;
+      const titleElement = document.getElementById('middle-title');
+      const currentText = titleElement.textContent;
+      const input = document.createElement('input');
+      input.className = 'top-middle-input';
+      input.type = 'text';
+      input.value = currentText;
+      titleElement.parentNode.insertBefore(input, titleElement);
+      titleElement.style.display = 'none';
+      input.focus();
+      input.select();
+      const saveEdit = () => {
+          const newText = input.value.trim();
+          if (newText) {
+              examData.examTitle = newText;
+              titleElement.textContent = newText;
+              saveState();
+          }
+          titleElement.style.display = 'block';
+          input.remove();
+          editingMiddleTitle = false;
+      };
+      const cancelEdit = () => {
+          titleElement.style.display = 'block';
+          input.remove();
+          editingMiddleTitle = false;
+      };
+      input.addEventListener('blur', saveEdit);
+      input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              saveEdit();
+          } else if (e.key === 'Escape') {
+              e.preventDefault();
+              cancelEdit();
+          }
+      });
+  }
+
+  function editQuestion() {
+      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
+      exitEditMode();
+      editingQuestion = true;
+      const questionElement = document.getElementById('question-text');
+      const currentText = questionElement.textContent;
+      const input = document.createElement('textarea');
+      input.className = 'editable-input';
+      input.value = currentText;
+      input.style.height = 'auto';
+      input.style.height = input.scrollHeight + 'px';
+      questionElement.parentNode.insertBefore(input, questionElement);
+      questionElement.style.display = 'none';
+      const saveBtn = document.createElement('button');
+      saveBtn.className = 'save-edit-btn';
+      saveBtn.textContent = 'Save';
+      saveBtn.onclick = () => saveQuestionEdit(input, questionElement);
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'cancel-edit-btn';
+      cancelBtn.textContent = 'Cancel';
+      cancelBtn.onclick = () => cancelQuestionEdit(input, questionElement);
+      input.parentNode.insertBefore(saveBtn, input.nextSibling);
+      input.parentNode.insertBefore(cancelBtn, saveBtn.nextSibling);
+      input.focus();
+      input.select();
+      input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+              e.preventDefault();
+              saveQuestionEdit(input, questionElement);
+          } else if (e.key === 'Escape') {
+              e.preventDefault();
+              cancelQuestionEdit(input, questionElement);
+          }
+      });
+  }
+
+  function saveQuestionEdit(input, questionElement) {
+      const newText = input.value.trim();
+      if (newText) {
+          examData.questions[currentQuestionIndex].prompt = newText;
+          questionElement.textContent = newText;
+          saveState();
+      }
+      questionElement.style.display = 'block';
+      input.remove();
+      document.querySelectorAll('.save-edit-btn, .cancel-edit-btn').forEach(btn => btn.remove());
+      editingQuestion = false;
+  }
+
+  function cancelQuestionEdit(input, questionElement) {
+      questionElement.style.display = 'block';
+      input.remove();
+      document.querySelectorAll('.save-edit-btn, .cancel-edit-btn').forEach(btn => btn.remove());
+      editingQuestion = false;
+  }
+
+  function editOption(optionIndex) {
+      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
+      exitEditMode();
+      editingOption = optionIndex;
+      const optionElement = document.querySelector(`[data-option-index="${optionIndex}"]`);
+      const currentText = optionElement.textContent;
+      optionElement.classList.add('editing');
+      optionElement.contentEditable = true;
+      optionElement.textContent = currentText;
+      const saveEdit = () => {
+          const newText = optionElement.textContent.trim();
+          if (newText) {
+              examData.questions[currentQuestionIndex].choices[optionIndex] = newText;
+              saveState();
+          }
+          optionElement.contentEditable = false;
+          optionElement.classList.remove('editing');
+          editingOption = -1;
+      };
+      const cancelEdit = () => {
+          optionElement.textContent = currentText;
+          optionElement.contentEditable = false;
+          optionElement.classList.remove('editing');
+          editingOption = -1;
+      };
+      optionElement.addEventListener('blur', saveEdit, { once: true });
+      optionElement.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              saveEdit();
+          } else if (e.key === 'Escape') {
+              e.preventDefault();
+              cancelEdit();
+          }
+      }, { once: true });
+      optionElement.focus();
+      if (window.getSelection) {
+          const selection = window.getSelection();
+          const range = document.createRange();
+          range.selectNodeContents(optionElement);
+          selection.removeAllRanges();
+          selection.addRange(range);
+      }
   }
 
   function selectOption(index) {
+      if (editingOption !== -1 || editingQuestion || editingTopTitle || editingMiddleTitle || editingTimer) return;
       examData.questions[currentQuestionIndex].selectedIndex = index;
       displayCurrentQuestion();
       saveState();
@@ -579,6 +1129,7 @@
           if (remainingSeconds > 0) {
               remainingSeconds--;
               updateTimerDisplay();
+              updateTimerWarnings();
               saveState();
           } else {
               clearInterval(timerInterval);
@@ -595,12 +1146,28 @@
           `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
+  function updateTimerWarnings() {
+      const timerContainer = document.getElementById('timer-container');
+      timerContainer.classList.remove('warning', 'critical');
+      if (remainingSeconds <= 300) {
+          timerContainer.classList.add('critical');
+      } else if (remainingSeconds <= 600) {
+          timerContainer.classList.add('warning');
+      }
+  }
+
   function handleTimeUp() {
-      alert('Time is up! The exam has ended.');
-      document.querySelectorAll('button, .option').forEach(el => {
+      document.getElementById('time-up-overlay').style.display = 'flex';
+      document.querySelectorAll('button, .option, input, textarea').forEach(el => {
           el.style.pointerEvents = 'none';
           el.style.opacity = '0.6';
       });
+      if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('انتهى وقت الاختبار!', {
+              body: 'تم انتهاء الوقت المخصص للاختبار',
+              icon: '/favicon.ico'
+          });
+      }
   }
 
   function setupEventListeners() {
@@ -614,7 +1181,21 @@
               navigateToQuestion(currentQuestionIndex + 1);
           }
       });
+      document.getElementById('app-title').addEventListener('dblclick', editTopTitle);
+      document.getElementById('middle-title').addEventListener('dblclick', editMiddleTitle);
+      document.getElementById('question-text').addEventListener('dblclick', editQuestion);
+      document.addEventListener('dblclick', (e) => {
+          if (e.target.classList.contains('option-text')) {
+              const optionIndex = parseInt(e.target.dataset.optionIndex);
+              editOption(optionIndex);
+          }
+      });
+      document.getElementById('timer-container').addEventListener('dblclick', (e) => {
+          e.preventDefault();
+          editTimer();
+      });
       document.addEventListener('keydown', (e) => {
+          if (editingQuestion || editingOption !== -1 || editingTopTitle || editingMiddleTitle || editingTimer) return;
           switch(e.key) {
               case 'ArrowUp':
                   e.preventDefault();
@@ -640,6 +1221,9 @@
                   break;
           }
       });
+      if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission();
+      }
   }
 
   document.addEventListener('touchmove', function(e) {
