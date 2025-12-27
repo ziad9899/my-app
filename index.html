@@ -1100,7 +1100,11 @@
 
   function selectOption(index) {
       if (editingOption !== -1 || editingQuestion || editingTopTitle || editingMiddleTitle || editingTimer) return;
-      examData.questions[currentQuestionIndex].selectedIndex = index;
+      if (examData.questions[currentQuestionIndex].selectedIndex === index) {
+          examData.questions[currentQuestionIndex].selectedIndex = null;
+      } else {
+          examData.questions[currentQuestionIndex].selectedIndex = index;
+      }
       displayCurrentQuestion();
       saveState();
   }
