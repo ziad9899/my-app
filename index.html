@@ -24,7 +24,6 @@
         width: 100vw;
     }
 
-    /* Top Bar */
     .top-bar {
         height: 64px;
         background-color: #3A4556;
@@ -87,14 +86,12 @@
         margin-left: 4px;
     }
 
-    /* Main Content */
     .main-container {
         display: flex;
         height: calc(100vh - 64px - 80px);
         background-color: #FAFAFA;
     }
 
-    /* Left Sidebar */
     .left-sidebar {
         width: 84px;
         background-color: #F8F9FA;
@@ -152,7 +149,6 @@
         color: #6B7280;
     }
 
-    /* Content Area */
     .content-area {
         flex: 1;
         padding: 20px 24px;
@@ -206,7 +202,6 @@
         font-size: 16px;
     }
 
-    /* Question Content */
     .question-content {
         margin-top: 32px;
     }
@@ -226,7 +221,6 @@
         margin-bottom: 24px;
     }
 
-    /* Answer Options */
     .options {
         display: flex;
         flex-direction: column;
@@ -291,7 +285,6 @@
         font-size: 16px;
     }
 
-    /* Bottom Bar */
     .bottom-bar {
         height: 80px;
         background-color: #E3F0FF;
@@ -355,7 +348,6 @@
         opacity: 0.6;
     }
 
-    /* Progress Bar */
     .progress-bar {
         position: fixed;
         bottom: 0;
@@ -374,7 +366,6 @@
 </head>
 
 <body>
-<!-- Top Bar -->
 <div class="top-bar">
   <div class="left-section">
     <div class="app-title">DMALFOY DRACO MALFOY</div>
@@ -390,21 +381,16 @@
   </div>
 </div>
 
-<!-- Main Container -->
 <div class="main-container">
-  <!-- Left Sidebar -->
   <div class="left-sidebar">
     <div class="filter-section">FILTER ></div>
-    <div class="question-nav" id="question-nav">
-      <!-- Question numbers will be generated here -->
-    </div>
+    <div class="question-nav" id="question-nav"></div>
   </div>
 
-  <!-- Content Area -->
   <div class="content-area">
     <div class="question-header">
       <div class="question-info">
-        <div class="question-number" id="question-title">Question # 1 of 25</div>
+        <div class="question-number" id="question-title">Question # 1 of 45</div>
         <button class="expand-btn">^</button>
       </div>
       <div class="toolbar">
@@ -414,22 +400,16 @@
     </div>
 
     <div class="question-content">
-      <div class="question-text" id="question-text">
-        Which is the correct answer?
-      </div>
+      <div class="question-text" id="question-text">Which is the correct answer?</div>
       <div class="answers-label">Answers A - D</div>
-
-      <div class="options" id="options-container">
-        <!-- Options will be generated here -->
-      </div>
+      <div class="options" id="options-container"></div>
     </div>
   </div>
 </div>
 
-<!-- Bottom Bar -->
 <div class="bottom-bar">
   <div class="bottom-info">
-    <span id="question-counter">1 OF 25 QUESTIONS</span>
+    <span id="question-counter">1 OF 45 QUESTIONS</span>
     <span>VERSION 5.0</span>
   </div>
   <div class="bottom-controls">
@@ -438,13 +418,11 @@
   </div>
 </div>
 
-<!-- Progress Bar -->
 <div class="progress-bar">
   <div class="progress-fill" id="progress-fill"></div>
 </div>
 
 <script>
-  // Exam Data
   const examData = {
       examTitle: "EXAMPLIFY UPDATED SCREENS TEST",
       version: "5.0",
@@ -452,8 +430,7 @@
       questions: []
   };
 
-  // Generate 25 questions to match requirements
-  for (let i = 1; i <= 25; i++) {
+  for (let i = 1; i <= 45; i++) {
       examData.questions.push({
           id: i,
           prompt: i === 1 ? "Which is the correct answer?" : `Sample question ${i}. Choose the correct answer:`,
@@ -468,12 +445,10 @@
       });
   }
 
-  // App State
   let currentQuestionIndex = 0;
   let remainingSeconds = examData.durationSeconds;
   let timerInterval;
 
-  // Initialize
   document.addEventListener('DOMContentLoaded', function() {
       loadState();
       initializeQuestionNav();
@@ -482,7 +457,6 @@
       setupEventListeners();
   });
 
-  // Load saved state
   function loadState() {
       const saved = localStorage.getItem('examState');
       if (saved) {
@@ -505,7 +479,6 @@
       }
   }
 
-  // Save state
   function saveState() {
       const state = {
           version: examData.version,
@@ -518,11 +491,9 @@
       localStorage.setItem('examState', JSON.stringify(state));
   }
 
-  // Initialize question navigation
   function initializeQuestionNav() {
       const container = document.getElementById('question-nav');
       container.innerHTML = '';
-
       for (let i = 0; i < examData.questions.length; i++) {
           const btn = document.createElement('button');
           btn.className = 'question-btn';
@@ -533,13 +504,11 @@
       updateQuestionNav();
   }
 
-  // Update question navigation styles
   function updateQuestionNav() {
       const buttons = document.querySelectorAll('.question-btn');
       buttons.forEach((btn, index) => {
           const question = examData.questions[index];
           btn.className = 'question-btn';
-
           if (index === currentQuestionIndex) {
               btn.classList.add('current');
           } else if (question.selectedIndex !== null) {
@@ -550,22 +519,18 @@
       });
   }
 
-  // Display current question
   function displayCurrentQuestion() {
       const question = examData.questions[currentQuestionIndex];
       document.getElementById('question-text').textContent = question.prompt;
       document.getElementById('question-title').textContent = `Question # ${currentQuestionIndex + 1} of ${examData.questions.length}`;
-
       const container = document.getElementById('options-container');
       container.innerHTML = '';
-
       question.choices.forEach((choice, index) => {
           const optionDiv = document.createElement('div');
           optionDiv.className = 'option';
           if (question.selectedIndex === index) {
               optionDiv.classList.add('selected');
           }
-
           optionDiv.innerHTML = `
               <div class="option-content">
                   <div class="option-letter">${String.fromCharCode(65 + index)}</div>
@@ -578,22 +543,18 @@
                   </svg>
               </div>
           `;
-
           optionDiv.addEventListener('click', () => selectOption(index));
           container.appendChild(optionDiv);
       });
-
       updateUI();
   }
 
-  // Select option
   function selectOption(index) {
       examData.questions[currentQuestionIndex].selectedIndex = index;
       displayCurrentQuestion();
       saveState();
   }
 
-  // Navigate to question
   function navigateToQuestion(index) {
       if (index >= 0 && index < examData.questions.length) {
           currentQuestionIndex = index;
@@ -602,22 +563,16 @@
       }
   }
 
-  // Update UI elements
   function updateUI() {
       const current = currentQuestionIndex + 1;
       const total = examData.questions.length;
       document.getElementById('question-counter').textContent = `${current} OF ${total} QUESTIONS`;
-
       document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-
-      // Update progress bar
       const progress = ((current) / total) * 100;
       document.getElementById('progress-fill').style.width = progress + '%';
-
       updateQuestionNav();
   }
 
-  // Timer functions
   function startTimer() {
       updateTimerDisplay();
       timerInterval = setInterval(() => {
@@ -648,21 +603,17 @@
       });
   }
 
-  // Setup event listeners
   function setupEventListeners() {
       document.getElementById('prev-btn').addEventListener('click', () => {
           if (currentQuestionIndex > 0) {
               navigateToQuestion(currentQuestionIndex - 1);
           }
       });
-
       document.getElementById('next-btn').addEventListener('click', () => {
           if (currentQuestionIndex < examData.questions.length - 1) {
               navigateToQuestion(currentQuestionIndex + 1);
           }
       });
-
-      // Keyboard navigation
       document.addEventListener('keydown', (e) => {
           switch(e.key) {
               case 'ArrowUp':
@@ -691,7 +642,6 @@
       });
   }
 
-  // Prevent zoom on iOS
   document.addEventListener('touchmove', function(e) {
       if (e.scale !== 1) {
           e.preventDefault();
@@ -707,7 +657,6 @@
       lastTouchEnd = now;
   }, false);
 
-  // Register Service Worker
   if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
           navigator.serviceWorker.register('/service-worker.js')
