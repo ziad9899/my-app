@@ -2,1258 +2,1252 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Exam App">
-  <title>EXAMPLIFY UPDATED SCREENS TEST</title>
+  <meta name="apple-mobile-web-app-title" content="Exam">
+  <meta name="theme-color" content="#5A5E66">
+  <title>Exam</title>
   <link rel="manifest" href="manifest.json">
 
   <style>
+    :root {
+        --bar: #5A5E66;
+        --side: #4E525A;
+        --navy-top: #1A2238;
+        --navy-bottom: #261C3A;
+        --accent: #1EA7FD;
+        --accent-dark: #148AD6;
+        --pill: rgba(120, 124, 134, 0.55);
+        --pill-border: rgba(255, 255, 255, 0.28);
+        --text: #FFFFFF;
+        --muted: rgba(255, 255, 255, 0.72);
+        --divider: rgba(255, 255, 255, 0.35);
+        --danger: #FF5A52;
+        --edit: #34D17A;
+    }
+
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+        height: 100%;
+        background: var(--bar);
     }
 
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background-color: #FAFAFA;
+        color: var(--text);
         overflow: hidden;
-        height: 100vh;
         width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
     }
 
+    /* ---------- top bar ---------- */
     .top-bar {
-        height: 64px;
-        background-color: #3A4556;
-        display: flex;
+        flex-shrink: 0;
+        background-color: var(--bar);
+        padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+    }
+
+    .top-row {
+        height: 60px;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        color: white;
-        font-size: 13px;
+        gap: 12px;
     }
 
     .left-section {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 14px;
+        min-width: 0;
+        font-size: 16px;
+        font-weight: 600;
     }
 
-    .app-title {
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-        cursor: pointer;
-        padding: 4px 8px;
+    .student-id, .student-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 4px 4px;
         border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-
-    .app-title:hover {
-        background-color: rgba(255, 255, 255, 0.1);
     }
 
     .middle-section {
-        font-size: 14px;
+        font-size: 17px;
         font-weight: 600;
-        cursor: pointer;
-        padding: 4px 8px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 42vw;
+        padding: 4px 6px;
         border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-
-    .middle-section:hover {
-        background-color: rgba(255, 255, 255, 0.1);
     }
 
     .right-section {
         display: flex;
         align-items: center;
-        gap: 20px;
+        justify-content: flex-end;
+        gap: 22px;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
     }
 
     .timer {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 14px;
+        gap: 7px;
         font-weight: 600;
-        cursor: pointer;
-        padding: 4px 8px;
+        font-variant-numeric: tabular-nums;
+        padding: 4px 4px;
         border-radius: 4px;
-        transition: background-color 0.2s;
     }
 
-    .timer:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+    .timer svg {
+        width: 19px;
+        height: 19px;
     }
 
-    .timer.warning {
-        color: #FFA500;
-    }
-
-    .timer.critical {
-        color: #FF4444;
-        animation: pulse 1s infinite;
-    }
+    .timer.warning { color: #FFB347; }
+    .timer.critical { color: var(--danger); animation: pulse 1s infinite; }
 
     @keyframes pulse {
         0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-    }
-
-    .timer-icon {
-        width: 16px;
-        height: 16px;
-        border: 2px solid white;
-        border-radius: 50%;
-        position: relative;
-    }
-
-    .timer-icon::after {
-        content: '';
-        position: absolute;
-        top: 1px;
-        left: 5px;
-        width: 1px;
-        height: 5px;
-        background-color: white;
-        transform-origin: bottom;
+        50% { opacity: 0.6; }
     }
 
     .control-btn {
         background: none;
         border: none;
-        color: white;
-        font-size: 13px;
-        cursor: pointer;
-        padding: 6px 12px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-
-    .control-btn:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .dropdown::after {
-        content: ' ▾';
-        margin-left: 4px;
-    }
-
-    .main-container {
+        color: var(--text);
+        font: inherit;
         display: flex;
-        height: calc(100vh - 64px - 80px);
-        background-color: #FAFAFA;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 6px 2px;
+        white-space: nowrap;
+    }
+
+    .control-btn svg { width: 16px; height: 16px; }
+
+    /* ---------- dropdown ---------- */
+    .menu {
+        position: fixed;
+        z-index: 500;
+        min-width: 250px;
+        background: rgba(98, 102, 112, 0.92);
+        -webkit-backdrop-filter: blur(18px);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 16px;
+        padding: 8px 0;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+        display: none;
+    }
+
+    .menu.show { display: block; }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 22px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .menu-item svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .menu-item:active { background: rgba(255, 255, 255, 0.08); }
+    .menu-item.danger { color: var(--danger); }
+
+    .menu-sep {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+        margin: 8px 22px;
+    }
+
+    /* ---------- body ---------- */
+    .main-container {
+        flex: 1;
+        display: flex;
+        min-height: 0;
     }
 
     .left-sidebar {
-        width: 84px;
-        background-color: #F8F9FA;
-        border-right: 1px solid #E5E7EB;
-        overflow-y: auto;
-        padding: 20px 0;
+        width: 104px;
+        flex-shrink: 0;
+        background-color: var(--side);
+        display: flex;
+        flex-direction: column;
+        padding-left: env(safe-area-inset-left);
     }
 
     .filter-section {
-        padding: 0 16px 16px;
-        color: #6B7280;
-        font-size: 12px;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #E5E7EB;
-        margin-bottom: 16px;
+        height: 56px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
+    .filter-section svg { width: 28px; height: 28px; }
+
     .question-nav {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 18px;
+        padding: 16px 0 24px;
+        scrollbar-width: none;
     }
 
+    .question-nav::-webkit-scrollbar { display: none; }
+
     .question-btn {
-        width: 44px;
-        height: 44px;
+        width: 70px;
+        height: 70px;
+        flex-shrink: 0;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: 24px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.2s;
         position: relative;
-        border: none;
+        background: transparent;
+        color: var(--text);
+        border: 4px solid #F2F2F4;
+        font-family: inherit;
     }
 
     .question-btn.current {
-        background-color: #5B9BD5;
-        color: white;
+        background-color: var(--accent);
+        border-color: var(--accent);
     }
 
-    .question-btn.answered {
-        background-color: transparent;
-        border: 2px solid #5B9BD5;
-        color: #5B9BD5;
+    .question-btn.answered:not(.current) {
+        background-color: rgba(255, 255, 255, 0.18);
     }
 
-    .question-btn.default {
-        background-color: transparent;
-        border: 2px solid #D1D5DB;
-        color: #6B7280;
+    .question-btn.flagged::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #FFB020;
+        border: 2px solid var(--side);
     }
 
     .content-area {
         flex: 1;
-        padding: 20px 24px;
-        background-color: #FAFAFA;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(180deg, var(--navy-top) 0%, var(--navy-top) 45%, var(--navy-bottom) 100%);
+    }
+
+    .content-scroll {
+        flex: 1;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 14px max(28px, env(safe-area-inset-right)) 28px 22px;
     }
 
-    .question-header {
-        display: flex;
+    .flag-btn {
+        display: inline-flex;
         align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-
-    .question-info {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .question-number {
-        font-size: 16px;
-        color: #374151;
-        font-weight: 500;
-    }
-
-    .expand-btn {
-        background: none;
+        gap: 8px;
+        background: #5F636B;
         border: none;
-        color: #6B7280;
+        color: var(--text);
+        font: 600 16px/1 inherit;
+        font-family: inherit;
+        padding: 11px 18px;
+        border-radius: 22px;
         cursor: pointer;
-        font-size: 14px;
     }
 
-    .question-content {
-        margin-top: 32px;
+    .flag-btn.on { background: #FFB020; color: #1A1A1A; }
+    .flag-btn svg { width: 15px; height: 15px; display: none; }
+    .flag-btn.on svg { display: block; }
+
+    .question-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 16px;
     }
+
+    .section-label, .question-number {
+        color: var(--accent);
+        font-size: 22px;
+        font-weight: 500;
+        padding: 2px 2px;
+        border-radius: 4px;
+    }
+
+    .section-label { margin-bottom: 16px; }
+    .section-label.empty { display: none; }
+
+    .head-icons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        padding-top: 4px;
+        color: var(--text);
+    }
+
+    .head-icons svg { width: 22px; height: 22px; }
 
     .question-text {
-        font-size: 18px;
-        color: #1F2937;
+        font-size: 19px;
         font-weight: 500;
-        margin-bottom: 8px;
-        line-height: 1.5;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
+        line-height: 1.45;
+        margin-top: 22px;
+        padding: 6px 4px;
+        border-radius: 6px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
     }
 
-    .question-text:hover {
-        background-color: #F9FAFB;
-    }
-
-    .question-text.editing {
-        background: #F8F9FA;
-        border: 2px solid #28A745;
-        outline: none;
-    }
-
-    .editable-input {
-        width: 100%;
-        font-size: 18px;
-        color: #1F2937;
-        font-weight: 500;
-        line-height: 1.5;
-        border: 2px solid #28A745;
-        border-radius: 4px;
-        padding: 8px;
-        background: #F8F9FA;
-        font-family: inherit;
-        resize: vertical;
-        min-height: 50px;
-    }
-
-    .editable-input:focus {
-        outline: none;
-        border-color: #20C645;
+    .question-divider {
+        height: 1px;
+        background: var(--divider);
+        margin: 26px -28px 0 -22px;
     }
 
     .answers-label {
-        font-size: 14px;
-        color: #6B7280;
-        font-weight: 500;
-        margin-bottom: 24px;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 26px 0 26px;
+        padding: 2px 2px;
+        border-radius: 4px;
+        display: inline-block;
     }
 
     .options {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 14px;
     }
 
     .option {
-        background: white;
-        border: 1px solid #E5E7EB;
-        border-radius: 50px;
-        padding: 16px 20px;
+        background: var(--pill);
+        border: 1.5px solid var(--pill-border);
+        border-radius: 30px;
+        padding: 16px 22px 16px 24px;
         cursor: pointer;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        transition: all 0.2s;
-        min-height: 60px;
-        position: relative;
-    }
-
-    .option:hover {
-        border-color: #D1D5DB;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        gap: 20px;
+        min-height: 68px;
     }
 
     .option.selected {
-        border-color: #5B9BD5;
-        background-color: #F0F7FF;
+        background: var(--accent);
+        border-color: var(--accent);
     }
 
-    .option.editing {
-        border-color: #28A745;
-        background-color: #F8FFF8;
-    }
-
-    .option-content {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        flex: 1;
+    .option.struck .option-text {
+        text-decoration: line-through;
+        opacity: 0.45;
     }
 
     .option-letter {
-        font-weight: 600;
-        font-size: 16px;
-        color: #6B7280;
+        font-weight: 700;
+        font-size: 20px;
+        min-width: 22px;
         flex-shrink: 0;
-        min-width: 20px;
-    }
-
-    .option.selected .option-letter {
-        color: #5B9BD5;
     }
 
     .option-text {
-        font-size: 16px;
-        color: #1F2937;
-        line-height: 1.4;
         flex: 1;
-        cursor: pointer;
-        padding: 4px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-
-    .option-text:hover {
-        background-color: #F9FAFB;
-    }
-
-    .option-text.editing {
-        background: #F8F9FA;
-        border: 2px solid #28A745;
-        padding: 8px;
-        outline: none;
-        font-family: inherit;
-        font-size: 16px;
-        color: #1F2937;
+        font-size: 17px;
         line-height: 1.4;
-        width: 100%;
+        padding: 3px 4px;
         border-radius: 4px;
+        word-wrap: break-word;
     }
 
-    .option-icon {
-        color: #9CA3AF;
-        font-size: 16px;
+    .option-eye {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: var(--text);
     }
 
+    .option-eye svg { width: 30px; height: 30px; }
+
+    /* ---------- bottom bar ---------- */
     .bottom-bar {
-        height: 80px;
-        background-color: #E3F0FF;
+        flex-shrink: 0;
+        background: var(--bar);
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 0 24px;
-        border-top: 1px solid #DBEAFE;
-    }
-
-    .bottom-info {
-        display: flex;
-        align-items: center;
-        gap: 32px;
-        font-size: 13px;
-        color: #6B7280;
-        font-weight: 500;
-    }
-
-    .bottom-controls {
-        display: flex;
-        gap: 12px;
+        gap: 28px;
+        padding: 14px max(22px, env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left));
     }
 
     .nav-btn {
-        padding: 12px 32px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 600;
+        flex: 1;
+        height: 56px;
+        border-radius: 28px;
+        font-family: inherit;
+        font-size: 19px;
+        font-weight: 500;
         cursor: pointer;
-        transition: all 0.2s;
         border: none;
     }
 
     .nav-btn.previous {
-        background-color: #F3F4F6;
-        color: #9CA3AF;
+        background: #C9CACE;
+        color: var(--accent);
     }
 
-    .nav-btn.previous:not(:disabled) {
-        background-color: white;
-        color: #374151;
-        border: 1px solid #D1D5DB;
-    }
-
-    .nav-btn.previous:not(:disabled):hover {
-        background-color: #F9FAFB;
+    .nav-btn.previous:disabled {
+        color: rgba(255, 255, 255, 0.85);
+        background: #B4B6BB;
+        cursor: default;
     }
 
     .nav-btn.next {
-        background-color: #5B9BD5;
-        color: white;
+        background: var(--accent);
+        color: var(--text);
     }
 
-    .nav-btn.next:hover {
-        background-color: #4A8BC2;
+    .nav-btn.next:disabled { opacity: 0.55; cursor: default; }
+
+    .question-counter {
+        font-size: 20px;
+        font-weight: 700;
+        white-space: nowrap;
+        min-width: 70px;
+        text-align: center;
+        padding: 4px 4px;
+        border-radius: 4px;
     }
 
-    .nav-btn:disabled {
-        cursor: not-allowed;
-        opacity: 0.6;
+    /* ---------- editing ---------- */
+    .is-editing {
+        outline: 2px solid var(--edit);
+        background: rgba(52, 209, 122, 0.12);
+        -webkit-user-select: text;
+        user-select: text;
+        cursor: text;
     }
 
-    .progress-bar {
+    .edit-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .edit-actions button {
+        border: none;
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .edit-actions .save { background: #28A745; }
+    .edit-actions .cancel { background: #DC3545; }
+
+    .toast {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background-color: #E5E7EB;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background-color: #5B9BD5;
-        transition: width 0.3s ease;
-    }
-
-    .edit-hint {
-        position: fixed;
-        top: 70px;
-        right: 20px;
-        background: rgba(40, 167, 69, 0.9);
-        color: white;
-        padding: 8px 12px;
+        left: 50%;
+        bottom: calc(100px + env(safe-area-inset-bottom));
+        transform: translateX(-50%);
+        background: rgba(20, 24, 36, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 10px 18px;
         border-radius: 20px;
-        font-size: 11px;
-        font-weight: 500;
-        z-index: 1000;
-        display: none;
+        font-size: 14px;
+        z-index: 2000;
+        opacity: 0;
+        transition: opacity 0.25s;
         pointer-events: none;
     }
 
-    .edit-hint.show {
-        display: block;
-        animation: fadeInOut 2s ease-in-out;
-    }
+    .toast.show { opacity: 1; }
 
-    @keyframes fadeInOut {
-        0%, 100% { opacity: 0; }
-        20%, 80% { opacity: 1; }
-    }
-
-    .save-edit-btn {
-        background: #28A745;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        cursor: pointer;
-        margin-left: 8px;
-    }
-
-    .save-edit-btn:hover {
-        background: #218838;
-    }
-
-    .cancel-edit-btn {
-        background: #DC3545;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        cursor: pointer;
-        margin-left: 4px;
-    }
-
-    .cancel-edit-btn:hover {
-        background: #C82333;
-    }
-
-    .top-editable-input {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        font-size: 13px;
-        font-weight: 500;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-family: inherit;
-        letter-spacing: 0.5px;
-    }
-
-    .top-editable-input:focus {
-        outline: none;
-        border-color: rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .top-middle-input {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        font-size: 14px;
-        font-weight: 600;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-family: inherit;
-        text-align: center;
-        min-width: 250px;
-    }
-
-    .top-middle-input:focus {
-        outline: none;
-        border-color: rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .timer-input {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        font-size: 14px;
-        font-weight: 600;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-family: inherit;
-        text-align: center;
-        width: 80px;
-    }
-
-    .timer-input:focus {
-        outline: none;
-        border-color: rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .timer.edit-flash {
-        animation: timerEditFlash 0.5s ease-in-out;
-    }
-
-    @keyframes timerEditFlash {
-        0%, 100% { background-color: rgba(255, 255, 255, 0.1); }
-        50% { background-color: rgba(59, 130, 246, 0.3); }
-    }
-
-    .time-up-overlay {
+    /* ---------- overlays ---------- */
+    .overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.8);
+        inset: 0;
+        z-index: 1000;
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 9999;
+        background: rgba(8, 10, 18, 0.72);
+        padding: 24px;
     }
 
-    .time-up-message {
-        background: white;
-        padding: 40px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    .overlay.show { display: flex; }
+
+    .dialog {
+        background: #2A3045;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 16px;
+        padding: 28px 30px;
+        width: min(520px, 100%);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
     }
 
-    .time-up-message h2 {
-        color: #DC3545;
-        font-size: 24px;
-        margin-bottom: 16px;
+    .dialog h2 { font-size: 22px; margin-bottom: 10px; }
+    .dialog p { color: var(--muted); font-size: 16px; line-height: 1.5; }
+
+    .dialog-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 24px;
     }
 
-    .time-up-message p {
-        color: #6B7280;
+    .dialog-actions button {
+        border: none;
+        font-family: inherit;
         font-size: 16px;
+        font-weight: 600;
+        padding: 12px 22px;
+        border-radius: 22px;
+        cursor: pointer;
+    }
+
+    .btn-secondary { background: #5F636B; color: #fff; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .summary-cell {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+    }
+
+    .summary-cell b { display: block; font-size: 26px; margin-bottom: 4px; }
+    .summary-cell span { color: var(--muted); font-size: 13px; }
+
+    .hide-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 1500;
+        background: var(--navy-top);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 14px;
+        color: var(--muted);
+        font-size: 16px;
+    }
+
+    .hide-screen.show { display: flex; }
+    .hide-screen svg { width: 46px; height: 46px; }
+
+    @media (max-width: 900px) {
+        .left-sidebar { width: 76px; }
+        .question-btn { width: 50px; height: 50px; font-size: 19px; border-width: 3px; }
+        .right-section { gap: 14px; font-size: 14px; }
+        .left-section, .middle-section { font-size: 14px; }
+    }
+
+    @media (max-width: 640px) {
+        .top-row { grid-template-columns: 1fr auto; }
+        .middle-section { display: none; }
+        .left-sidebar { width: 64px; }
+        .question-btn { width: 42px; height: 42px; font-size: 16px; }
+        .content-scroll { padding: 12px 16px 20px 14px; }
+        .question-divider { margin: 22px -16px 0 -14px; }
+        .bottom-bar { gap: 12px; }
+        .nav-btn { font-size: 16px; height: 48px; }
+        .question-counter { font-size: 16px; min-width: 52px; }
     }
   </style>
 </head>
 
 <body>
-<div class="edit-hint" id="edit-hint">Double-click to edit text</div>
-
-<div class="time-up-overlay" id="time-up-overlay">
-  <div class="time-up-message">
-    <h2>⏰ انتهى الوقت!</h2>
-    <p>لقد انتهى وقت الاختبار</p>
+<div class="top-bar">
+  <div class="top-row">
+    <div class="left-section">
+      <span class="student-id" id="student-id" data-edit="studentId">000000</span>
+      <span class="student-name" id="student-name" data-edit="studentName">Student Name</span>
+    </div>
+    <div class="middle-section" id="exam-title" data-edit="examTitle">Course Exam</div>
+    <div class="right-section">
+      <div class="timer" id="timer-container">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3a9 9 0 1 1-6.4 2.6"/><path d="M12 7v5l3 2"/><path d="M5.6 2.5v3.2h3.2"/></svg>
+        <span id="timer-display">01:00:00</span>
+      </div>
+      <button class="control-btn" id="controls-btn">EXAM CONTROLS
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <button class="control-btn" id="toolkit-btn">TOOLKIT
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="19" r="2.2"/></svg>
+      </button>
+    </div>
   </div>
 </div>
 
-<div class="top-bar">
-  <div class="left-section">
-    <div class="app-title" id="app-title">DMALFOY DRACO MALFOY</div>
+<div class="menu" id="controls-menu">
+  <div class="menu-item" data-action="notices">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+    Notices
   </div>
-  <div class="middle-section" id="middle-title">EXAMPLIFY UPDATED SCREENS TEST</div>
-  <div class="right-section">
-    <div class="timer" id="timer-container">
-      <div class="timer-icon"></div>
-      <span id="timer-display">01:15:00</span>
-    </div>
-    <button class="control-btn dropdown">EXAM CONTROLS</button>
-    <button class="control-btn">TOOL KIT ⋮</button>
+  <div class="menu-item" data-action="hide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.1 10.1 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.1-5.9M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2"/><path d="M1 1l22 22"/></svg>
+    Hide Exam
+  </div>
+  <div class="menu-sep"></div>
+  <div class="menu-item danger" data-action="submit">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg>
+    Submit Exam
+  </div>
+</div>
+
+<div class="menu" id="toolkit-menu">
+  <div class="menu-item" data-action="reset-answers">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+    Clear Answers
+  </div>
+  <div class="menu-item" data-action="restart-timer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>
+    Restart Timer
   </div>
 </div>
 
 <div class="main-container">
   <div class="left-sidebar">
-    <div class="filter-section">FILTER ></div>
+    <div class="filter-section">
+      <svg viewBox="0 0 28 28" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="14" cy="14" r="12"/><path d="M8.5 10h11M10 14h8M11.5 18h5"/></svg>
+    </div>
     <div class="question-nav" id="question-nav"></div>
   </div>
 
   <div class="content-area">
-    <div class="question-header">
-      <div class="question-info">
-        <div class="question-number" id="question-title">Question # 1 of 45</div>
-        <button class="expand-btn">^</button>
-      </div>
-    </div>
+    <div class="content-scroll" id="content-scroll">
+      <button class="flag-btn" id="flag-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h2v20H5zM8 3h11l-2.5 4.5L19 12H8z"/></svg>
+        <span>Flag Question</span>
+      </button>
 
-    <div class="question-content">
-      <div class="question-text" id="question-text">Which is the correct answer?</div>
-      <div class="answers-label">Answers A - D</div>
+      <div class="question-head">
+        <div>
+          <div class="section-label" id="section-label"></div>
+          <div class="question-number" id="question-number">Question 1</div>
+        </div>
+        <div class="head-icons">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div class="question-text" id="question-text"></div>
+      <div class="question-divider"></div>
+      <div class="answers-label" id="answers-label" data-edit="answersLabel">Answers A–D</div>
       <div class="options" id="options-container"></div>
     </div>
   </div>
 </div>
 
 <div class="bottom-bar">
-  <div class="bottom-info">
-    <span id="question-counter">1 OF 45 QUESTIONS</span>
-    <span>VERSION 5.0</span>
-  </div>
-  <div class="bottom-controls">
-    <button class="nav-btn previous" id="prev-btn" disabled>Previous</button>
-    <button class="nav-btn next" id="next-btn">Next</button>
+  <button class="nav-btn previous" id="prev-btn" disabled>Previous</button>
+  <div class="question-counter" id="question-counter">1 of 45</div>
+  <button class="nav-btn next" id="next-btn">Next</button>
+</div>
+
+<div class="overlay" id="notices-overlay">
+  <div class="dialog">
+    <h2>Notices</h2>
+    <p>There are no notices for this exam.</p>
+    <div class="dialog-actions"><button class="btn-primary" data-close>OK</button></div>
   </div>
 </div>
 
-<div class="progress-bar">
-  <div class="progress-fill" id="progress-fill"></div>
+<div class="overlay" id="confirm-overlay">
+  <div class="dialog">
+    <h2>Submit Exam?</h2>
+    <p id="confirm-text"></p>
+    <div class="dialog-actions">
+      <button class="btn-secondary" data-close>Cancel</button>
+      <button class="btn-danger" id="confirm-submit">Submit</button>
+    </div>
+  </div>
 </div>
+
+<div class="overlay" id="end-overlay">
+  <div class="dialog">
+    <h2 id="end-title">Session Ended</h2>
+    <p>Here is a summary of this session.</p>
+    <div class="summary-grid">
+      <div class="summary-cell"><b id="sum-answered">0</b><span>Answered</span></div>
+      <div class="summary-cell"><b id="sum-flagged">0</b><span>Flagged</span></div>
+      <div class="summary-cell"><b id="sum-time">00:00:00</b><span>Time Left</span></div>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn-secondary" id="review-btn">Review</button>
+      <button class="btn-primary" id="restart-btn">Start Again</button>
+    </div>
+  </div>
+</div>
+
+<div class="hide-screen" id="hide-screen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.1 10.1 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.1-5.9M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2"/><path d="M1 1l22 22"/></svg>
+  Exam hidden. Tap anywhere to return.
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
+  const STORAGE_KEY = 'examSimState';
+  const STATE_VERSION = 2;
+  const DEFAULT_QUESTIONS = 45;
+  const DEFAULT_SECONDS = 3600;
+
   const examData = {
-      examTitle: "EXAMPLIFY UPDATED SCREENS TEST",
-      version: "5.0",
-      durationSeconds: 4500,
-      questions: [],
-      appTitle: "DMALFOY DRACO MALFOY"
+      studentId: '000000',
+      studentName: 'Student Name',
+      examTitle: 'Course Exam',
+      answersLabel: 'Answers A–D',
+      durationSeconds: DEFAULT_SECONDS,
+      questions: []
   };
 
-  for (let i = 1; i <= 45; i++) {
-      examData.questions.push({
-          id: i,
-          prompt: i === 1 ? "Which is the correct answer?" : `Sample question ${i}. Choose the correct answer:`,
-          choices: [
-              i === 1 ? "This is incorrect." : `Option A for question ${i}`,
-              i === 1 ? "This is correct." : `Option B for question ${i}`,
-              i === 1 ? "This is incorrect." : `Option C for question ${i}`,
-              i === 1 ? "This is incorrect." : `Option D for question ${i}`
-          ],
-          correctIndex: 1,
-          selectedIndex: null
-      });
+  function makeQuestion(i) {
+      return {
+          section: '',
+          prompt: `Question ${i} text. Double-tap to edit.`,
+          choices: ['Option A', 'Option B', 'Option C', 'Option D'],
+          selectedIndex: null,
+          struck: [false, false, false, false],
+          flagged: false
+      };
+  }
+
+  function setQuestionCount(n) {
+      n = Math.max(1, Math.min(200, n));
+      while (examData.questions.length < n) examData.questions.push(makeQuestion(examData.questions.length + 1));
+      examData.questions.length = n;
+      if (currentQuestionIndex >= n) currentQuestionIndex = n - 1;
   }
 
   let currentQuestionIndex = 0;
-  let remainingSeconds = examData.durationSeconds;
-  let timerInterval;
-  let editingQuestion = false;
-  let editingOption = -1;
-  let editingTopTitle = false;
-  let editingMiddleTitle = false;
-  let editingTimer = false;
+  let remainingSeconds = DEFAULT_SECONDS;
+  let timerInterval = null;
+  let editing = null;
+  let submitted = false;
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', () => {
+      setQuestionCount(DEFAULT_QUESTIONS);
       loadState();
-      initializeQuestionNav();
+      renderHeader();
+      buildQuestionNav();
       displayCurrentQuestion();
       startTimer();
       setupEventListeners();
-      showEditHint();
+      setTimeout(() => showToast('Double-tap any text to edit it'), 800);
   });
 
-  function showEditHint() {
-      setTimeout(() => {
-          const hint = document.getElementById('edit-hint');
-          hint.classList.add('show');
-          setTimeout(() => {
-              hint.classList.remove('show');
-          }, 2000);
-      }, 1000);
-  }
-
+  // ---------- persistence ----------
   function loadState() {
-      const saved = localStorage.getItem('examState');
-      if (saved) {
-          try {
-              const state = JSON.parse(saved);
-              if (state.version === examData.version) {
-                  currentQuestionIndex = state.currentIndex || 0;
-                  remainingSeconds = state.remainingSeconds || examData.durationSeconds;
-                  if (state.appTitle) examData.appTitle = state.appTitle;
-                  if (state.examTitle) examData.examTitle = state.examTitle;
-                  if (state.questions) {
-                      state.questions.forEach((q, index) => {
-                          if (examData.questions[index]) {
-                              examData.questions[index].selectedIndex = q.selectedIndex;
-                              if (q.prompt) examData.questions[index].prompt = q.prompt;
-                              if (q.choices) examData.questions[index].choices = q.choices;
-                          }
-                      });
-                  }
-              }
-          } catch (e) {
-              console.error('Error loading state:', e);
-          }
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) {}
+      if (!saved || saved.v !== STATE_VERSION) return;
+      ['studentId', 'studentName', 'examTitle', 'answersLabel', 'durationSeconds'].forEach(k => {
+          if (saved[k] !== undefined) examData[k] = saved[k];
+      });
+      if (Array.isArray(saved.questions) && saved.questions.length) {
+          setQuestionCount(saved.questions.length);
+          saved.questions.forEach((q, i) => Object.assign(examData.questions[i], q));
       }
-      document.getElementById('app-title').textContent = examData.appTitle;
-      document.getElementById('middle-title').textContent = examData.examTitle;
+      currentQuestionIndex = Math.min(saved.currentIndex || 0, examData.questions.length - 1);
+      remainingSeconds = typeof saved.remainingSeconds === 'number' ? saved.remainingSeconds : examData.durationSeconds;
   }
 
   function saveState() {
-      const state = {
-          version: examData.version,
-          currentIndex: currentQuestionIndex,
-          remainingSeconds: remainingSeconds,
-          appTitle: examData.appTitle,
-          examTitle: examData.examTitle,
-          questions: examData.questions.map(q => ({
-              selectedIndex: q.selectedIndex,
-              prompt: q.prompt,
-              choices: q.choices
-          }))
-      };
-      localStorage.setItem('examState', JSON.stringify(state));
+      try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+              v: STATE_VERSION,
+              studentId: examData.studentId,
+              studentName: examData.studentName,
+              examTitle: examData.examTitle,
+              answersLabel: examData.answersLabel,
+              durationSeconds: examData.durationSeconds,
+              currentIndex: currentQuestionIndex,
+              remainingSeconds: remainingSeconds,
+              questions: examData.questions
+          }));
+      } catch (e) {}
   }
 
-  function initializeQuestionNav() {
+  // ---------- rendering ----------
+  function renderHeader() {
+      document.getElementById('student-id').textContent = examData.studentId;
+      document.getElementById('student-name').textContent = examData.studentName;
+      document.getElementById('exam-title').textContent = examData.examTitle;
+      document.getElementById('answers-label').textContent = examData.answersLabel;
+      updateTimerDisplay();
+  }
+
+  function buildQuestionNav() {
       const container = document.getElementById('question-nav');
       container.innerHTML = '';
-      for (let i = 0; i < examData.questions.length; i++) {
+      examData.questions.forEach((q, i) => {
           const btn = document.createElement('button');
           btn.className = 'question-btn';
           btn.textContent = i + 1;
           btn.addEventListener('click', () => navigateToQuestion(i));
           container.appendChild(btn);
-      }
+      });
       updateQuestionNav();
   }
 
   function updateQuestionNav() {
-      const buttons = document.querySelectorAll('.question-btn');
-      buttons.forEach((btn, index) => {
-          const question = examData.questions[index];
+      document.querySelectorAll('.question-btn').forEach((btn, i) => {
+          const q = examData.questions[i];
           btn.className = 'question-btn';
-          if (index === currentQuestionIndex) {
-              btn.classList.add('current');
-          } else if (question.selectedIndex !== null) {
-              btn.classList.add('answered');
-          } else {
-              btn.classList.add('default');
-          }
+          if (i === currentQuestionIndex) btn.classList.add('current');
+          if (q.selectedIndex !== null) btn.classList.add('answered');
+          if (q.flagged) btn.classList.add('flagged');
       });
+      const current = document.querySelector('.question-btn.current');
+      if (current) current.scrollIntoView({ block: 'nearest' });
   }
 
   function displayCurrentQuestion() {
-      const question = examData.questions[currentQuestionIndex];
-      document.getElementById('question-text').textContent = question.prompt;
-      document.getElementById('question-title').textContent = `Question # ${currentQuestionIndex + 1} of ${examData.questions.length}`;
+      exitEditMode(false);
+      const q = examData.questions[currentQuestionIndex];
+      const section = document.getElementById('section-label');
+      section.textContent = q.section;
+      section.classList.toggle('empty', !q.section);
+      document.getElementById('question-number').textContent = `Question ${currentQuestionIndex + 1}`;
+      document.getElementById('question-text').textContent = q.prompt;
+      document.getElementById('flag-btn').classList.toggle('on', q.flagged);
+
       const container = document.getElementById('options-container');
       container.innerHTML = '';
-      question.choices.forEach((choice, index) => {
+      q.choices.forEach((choice, index) => {
           const optionDiv = document.createElement('div');
           optionDiv.className = 'option';
-          if (question.selectedIndex === index) {
-              optionDiv.classList.add('selected');
-          }
+          if (q.selectedIndex === index) optionDiv.classList.add('selected');
+          if (q.struck[index]) optionDiv.classList.add('struck');
           optionDiv.innerHTML = `
-              <div class="option-content">
-                  <div class="option-letter">${String.fromCharCode(65 + index)}</div>
-                  <div class="option-text" data-option-index="${index}">${choice}</div>
-              </div>
-              <div class="option-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                      <circle cx="12" cy="12" r="3"/>
-                  </svg>
-              </div>
-          `;
+              <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+              <div class="option-text" data-option-index="${index}"></div>
+              <div class="option-eye" title="Strike out">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>`;
+          optionDiv.querySelector('.option-text').textContent = choice;
           optionDiv.addEventListener('click', (e) => {
-              if (editingOption === -1 && !e.target.classList.contains('option-text')) {
+              if (editing) return;
+              if (e.target.closest('.option-eye')) {
+                  toggleStrike(index);
+              } else {
                   selectOption(index);
               }
           });
           container.appendChild(optionDiv);
       });
-      updateUI();
-      exitEditMode();
+
+      document.getElementById('question-counter').textContent = `${currentQuestionIndex + 1} of ${examData.questions.length}`;
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+      document.getElementById('next-btn').disabled = currentQuestionIndex === examData.questions.length - 1;
+      document.getElementById('content-scroll').scrollTop = 0;
+      updateQuestionNav();
   }
 
-  function exitEditMode() {
-      editingQuestion = false;
-      editingOption = -1;
-      editingTopTitle = false;
-      editingMiddleTitle = false;
-      editingTimer = false;
-      const questionText = document.getElementById('question-text');
-      if (questionText.classList.contains('editing')) {
-          questionText.classList.remove('editing');
-      }
-      document.querySelectorAll('.option').forEach(option => {
-          option.classList.remove('editing');
+  function refreshOptions() {
+      const q = examData.questions[currentQuestionIndex];
+      document.querySelectorAll('.option').forEach((el, i) => {
+          el.classList.toggle('selected', q.selectedIndex === i);
+          el.classList.toggle('struck', !!q.struck[i]);
       });
-      document.querySelectorAll('.editable-input, .top-editable-input, .top-middle-input, .timer-input').forEach(input => {
-          input.remove();
-      });
-      document.querySelectorAll('.save-edit-btn, .cancel-edit-btn').forEach(btn => {
-          btn.remove();
-      });
+      updateQuestionNav();
   }
 
-  function parseTimeToSeconds(timeStr) {
-      const parts = timeStr.split(':');
-      if (parts.length === 3) {
-          const hours = parseInt(parts[0]) || 0;
-          const minutes = parseInt(parts[1]) || 0;
-          const seconds = parseInt(parts[2]) || 0;
-          return hours * 3600 + minutes * 60 + seconds;
-      }
-      return 0;
-  }
-
-  function editTimer() {
-      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
-      exitEditMode();
-      editingTimer = true;
-      const timerDisplay = document.getElementById('timer-display');
-      const currentText = timerDisplay.textContent;
-      const input = document.createElement('input');
-      input.className = 'timer-input';
-      input.type = 'text';
-      input.value = currentText;
-      input.placeholder = 'HH:MM:SS';
-      timerDisplay.parentNode.insertBefore(input, timerDisplay);
-      timerDisplay.style.display = 'none';
-      input.focus();
-      input.select();
-      const saveEdit = () => {
-          const newTime = input.value.trim();
-          if (newTime && /^\d{1,2}:\d{2}:\d{2}$/.test(newTime)) {
-              remainingSeconds = parseTimeToSeconds(newTime);
-              updateTimerDisplay();
-              saveState();
-          }
-          timerDisplay.style.display = 'inline';
-          input.remove();
-          editingTimer = false;
-          const timerContainer = document.getElementById('timer-container');
-          timerContainer.classList.add('edit-flash');
-          setTimeout(() => {
-              timerContainer.classList.remove('edit-flash');
-          }, 500);
-      };
-      const cancelEdit = () => {
-          timerDisplay.style.display = 'inline';
-          input.remove();
-          editingTimer = false;
-      };
-      input.addEventListener('blur', saveEdit);
-      input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-              e.preventDefault();
-              saveEdit();
-          } else if (e.key === 'Escape') {
-              e.preventDefault();
-              cancelEdit();
-          }
-      });
-  }
-
-  function editTopTitle() {
-      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
-      exitEditMode();
-      editingTopTitle = true;
-      const titleElement = document.getElementById('app-title');
-      const currentText = titleElement.textContent;
-      const input = document.createElement('input');
-      input.className = 'top-editable-input';
-      input.type = 'text';
-      input.value = currentText;
-      titleElement.parentNode.insertBefore(input, titleElement);
-      titleElement.style.display = 'none';
-      input.focus();
-      input.select();
-      const saveEdit = () => {
-          const newText = input.value.trim();
-          if (newText) {
-              examData.appTitle = newText;
-              titleElement.textContent = newText;
-              saveState();
-          }
-          titleElement.style.display = 'block';
-          input.remove();
-          editingTopTitle = false;
-      };
-      const cancelEdit = () => {
-          titleElement.style.display = 'block';
-          input.remove();
-          editingTopTitle = false;
-      };
-      input.addEventListener('blur', saveEdit);
-      input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-              e.preventDefault();
-              saveEdit();
-          } else if (e.key === 'Escape') {
-              e.preventDefault();
-              cancelEdit();
-          }
-      });
-  }
-
-  function editMiddleTitle() {
-      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
-      exitEditMode();
-      editingMiddleTitle = true;
-      const titleElement = document.getElementById('middle-title');
-      const currentText = titleElement.textContent;
-      const input = document.createElement('input');
-      input.className = 'top-middle-input';
-      input.type = 'text';
-      input.value = currentText;
-      titleElement.parentNode.insertBefore(input, titleElement);
-      titleElement.style.display = 'none';
-      input.focus();
-      input.select();
-      const saveEdit = () => {
-          const newText = input.value.trim();
-          if (newText) {
-              examData.examTitle = newText;
-              titleElement.textContent = newText;
-              saveState();
-          }
-          titleElement.style.display = 'block';
-          input.remove();
-          editingMiddleTitle = false;
-      };
-      const cancelEdit = () => {
-          titleElement.style.display = 'block';
-          input.remove();
-          editingMiddleTitle = false;
-      };
-      input.addEventListener('blur', saveEdit);
-      input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-              e.preventDefault();
-              saveEdit();
-          } else if (e.key === 'Escape') {
-              e.preventDefault();
-              cancelEdit();
-          }
-      });
-  }
-
-  function editQuestion() {
-      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
-      exitEditMode();
-      editingQuestion = true;
-      const questionElement = document.getElementById('question-text');
-      const currentText = questionElement.textContent;
-      const input = document.createElement('textarea');
-      input.className = 'editable-input';
-      input.value = currentText;
-      input.style.height = 'auto';
-      input.style.height = input.scrollHeight + 'px';
-      questionElement.parentNode.insertBefore(input, questionElement);
-      questionElement.style.display = 'none';
-      const saveBtn = document.createElement('button');
-      saveBtn.className = 'save-edit-btn';
-      saveBtn.textContent = 'Save';
-      saveBtn.onclick = () => saveQuestionEdit(input, questionElement);
-      const cancelBtn = document.createElement('button');
-      cancelBtn.className = 'cancel-edit-btn';
-      cancelBtn.textContent = 'Cancel';
-      cancelBtn.onclick = () => cancelQuestionEdit(input, questionElement);
-      input.parentNode.insertBefore(saveBtn, input.nextSibling);
-      input.parentNode.insertBefore(cancelBtn, saveBtn.nextSibling);
-      input.focus();
-      input.select();
-      input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-              e.preventDefault();
-              saveQuestionEdit(input, questionElement);
-          } else if (e.key === 'Escape') {
-              e.preventDefault();
-              cancelQuestionEdit(input, questionElement);
-          }
-      });
-  }
-
-  function saveQuestionEdit(input, questionElement) {
-      const newText = input.value.trim();
-      if (newText) {
-          examData.questions[currentQuestionIndex].prompt = newText;
-          questionElement.textContent = newText;
-          saveState();
-      }
-      questionElement.style.display = 'block';
-      input.remove();
-      document.querySelectorAll('.save-edit-btn, .cancel-edit-btn').forEach(btn => btn.remove());
-      editingQuestion = false;
-  }
-
-  function cancelQuestionEdit(input, questionElement) {
-      questionElement.style.display = 'block';
-      input.remove();
-      document.querySelectorAll('.save-edit-btn, .cancel-edit-btn').forEach(btn => btn.remove());
-      editingQuestion = false;
-  }
-
-  function editOption(optionIndex) {
-      if (editingTopTitle || editingMiddleTitle || editingQuestion || editingOption !== -1 || editingTimer) return;
-      exitEditMode();
-      editingOption = optionIndex;
-      const optionElement = document.querySelector(`[data-option-index="${optionIndex}"]`);
-      const currentText = optionElement.textContent;
-      optionElement.classList.add('editing');
-      optionElement.contentEditable = true;
-      optionElement.textContent = currentText;
-      const saveEdit = () => {
-          const newText = optionElement.textContent.trim();
-          if (newText) {
-              examData.questions[currentQuestionIndex].choices[optionIndex] = newText;
-              saveState();
-          }
-          optionElement.contentEditable = false;
-          optionElement.classList.remove('editing');
-          editingOption = -1;
-      };
-      const cancelEdit = () => {
-          optionElement.textContent = currentText;
-          optionElement.contentEditable = false;
-          optionElement.classList.remove('editing');
-          editingOption = -1;
-      };
-      optionElement.addEventListener('blur', saveEdit, { once: true });
-      optionElement.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-              e.preventDefault();
-              saveEdit();
-          } else if (e.key === 'Escape') {
-              e.preventDefault();
-              cancelEdit();
-          }
-      }, { once: true });
-      optionElement.focus();
-      if (window.getSelection) {
-          const selection = window.getSelection();
-          const range = document.createRange();
-          range.selectNodeContents(optionElement);
-          selection.removeAllRanges();
-          selection.addRange(range);
-      }
-  }
+  // ---------- answering ----------
+  let lastSelect = { time: 0, prev: null };
 
   function selectOption(index) {
-      if (editingOption !== -1 || editingQuestion || editingTopTitle || editingMiddleTitle || editingTimer) return;
-      if (examData.questions[currentQuestionIndex].selectedIndex === index) {
-          examData.questions[currentQuestionIndex].selectedIndex = null;
-      } else {
-          examData.questions[currentQuestionIndex].selectedIndex = index;
-      }
-      displayCurrentQuestion();
+      const q = examData.questions[currentQuestionIndex];
+      lastSelect = { time: Date.now(), prev: q.selectedIndex };
+      q.selectedIndex = q.selectedIndex === index ? null : index;
+      refreshOptions();
+      saveState();
+  }
+
+  function toggleStrike(index) {
+      const q = examData.questions[currentQuestionIndex];
+      q.struck[index] = !q.struck[index];
+      refreshOptions();
+      saveState();
+  }
+
+  function toggleFlag() {
+      const q = examData.questions[currentQuestionIndex];
+      q.flagged = !q.flagged;
+      document.getElementById('flag-btn').classList.toggle('on', q.flagged);
+      updateQuestionNav();
       saveState();
   }
 
   function navigateToQuestion(index) {
-      if (index >= 0 && index < examData.questions.length) {
-          currentQuestionIndex = index;
-          displayCurrentQuestion();
-          saveState();
+      if (editing || index < 0 || index >= examData.questions.length) return;
+      currentQuestionIndex = index;
+      displayCurrentQuestion();
+      saveState();
+  }
+
+  // ---------- editing (double-tap) ----------
+  // Inline edit of any text node. `commit` receives the trimmed new text.
+  function startEdit(el, { multiline = false, allowEmpty = false, commit }) {
+      if (editing || submitted) return;
+      closeMenus();
+      const original = el.textContent;
+      el.contentEditable = 'true';
+      el.classList.add('is-editing');
+      if (el.classList.contains('empty')) el.classList.remove('empty');
+
+      let actions = null;
+      if (multiline) {
+          actions = document.createElement('div');
+          actions.className = 'edit-actions';
+          actions.innerHTML = '<button class="save">Save</button><button class="cancel">Cancel</button>';
+          el.after(actions);
+          actions.querySelector('.save').addEventListener('mousedown', e => e.preventDefault());
+          actions.querySelector('.cancel').addEventListener('mousedown', e => e.preventDefault());
+          actions.querySelector('.save').addEventListener('click', () => finish(true));
+          actions.querySelector('.cancel').addEventListener('click', () => finish(false));
+      }
+
+      const onKey = (e) => {
+          if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+          else if (e.key === 'Enter' && (!multiline || e.metaKey || e.ctrlKey)) { e.preventDefault(); finish(true); }
+      };
+      const onBlur = () => finish(true);
+
+      function finish(save) {
+          if (!editing || editing.el !== el) return;
+          el.removeEventListener('keydown', onKey);
+          el.removeEventListener('blur', onBlur);
+          el.contentEditable = 'false';
+          el.classList.remove('is-editing');
+          if (actions) actions.remove();
+          editing = null;
+          const text = el.innerText.replace(/ /g, ' ').trim();
+          if (save && (text || allowEmpty)) {
+              commit(text);
+          } else {
+              el.textContent = original;
+          }
+          window.getSelection().removeAllRanges();
+      }
+
+      editing = { el, finish };
+      el.addEventListener('keydown', onKey);
+      el.addEventListener('blur', onBlur);
+      el.focus();
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+  }
+
+  function exitEditMode(save) {
+      if (editing) editing.finish(save);
+  }
+
+  function parseTime(str) {
+      const m = str.trim().match(/^(\d{1,2}):(\d{1,2}):(\d{1,2})$/) || str.trim().match(/^()(\d{1,3}):(\d{1,2})$/);
+      if (!m) return null;
+      return (parseInt(m[1] || '0', 10) * 3600) + parseInt(m[2], 10) * 60 + parseInt(m[3], 10);
+  }
+
+  function editTarget(target) {
+      const q = examData.questions[currentQuestionIndex];
+
+      const optionText = target.closest('.option-text');
+      if (optionText) {
+          const i = parseInt(optionText.dataset.optionIndex, 10);
+          return startEdit(optionText, { commit: t => { q.choices[i] = t; optionText.textContent = t; saveState(); } });
+      }
+      if (target.closest('#question-text')) {
+          const el = document.getElementById('question-text');
+          return startEdit(el, { multiline: true, commit: t => { q.prompt = t; el.textContent = t; saveState(); } });
+      }
+      if (target.closest('#question-number') || target.closest('#section-label')) {
+          const el = document.getElementById('section-label');
+          if (!q.section) el.textContent = '';
+          return startEdit(el, { allowEmpty: true, commit: t => {
+              q.section = t;
+              el.textContent = t;
+              el.classList.toggle('empty', !t);
+              saveState();
+          } });
+      }
+      const keyed = target.closest('[data-edit]');
+      if (keyed) {
+          const key = keyed.dataset.edit;
+          return startEdit(keyed, { commit: t => { examData[key] = t; keyed.textContent = t; saveState(); } });
+      }
+      if (target.closest('#timer-container')) {
+          const el = document.getElementById('timer-display');
+          return startEdit(el, { commit: t => {
+              const secs = parseTime(t);
+              if (secs === null) { updateTimerDisplay(); showToast('Use HH:MM:SS'); return; }
+              remainingSeconds = secs;
+              examData.durationSeconds = secs;
+              updateTimerDisplay();
+              updateTimerWarnings();
+              saveState();
+              if (!timerInterval && secs > 0 && !submitted) startTimer();
+          } });
+      }
+      if (target.closest('#question-counter')) {
+          const el = document.getElementById('question-counter');
+          el.textContent = String(examData.questions.length);
+          return startEdit(el, { commit: t => {
+              const n = parseInt(t, 10);
+              if (n > 0) {
+                  setQuestionCount(n);
+                  buildQuestionNav();
+                  saveState();
+              }
+              displayCurrentQuestion();
+          } });
       }
   }
 
-  function updateUI() {
-      const current = currentQuestionIndex + 1;
-      const total = examData.questions.length;
-      document.getElementById('question-counter').textContent = `${current} OF ${total} QUESTIONS`;
-      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-      const progress = ((current) / total) * 100;
-      document.getElementById('progress-fill').style.width = progress + '%';
-      updateQuestionNav();
+  // Double-tap that works on iPad touch and on desktop double-click.
+  let lastTap = { time: 0, x: 0, y: 0 };
+  let lastTouchEditAt = 0;
+
+  function handleTouchEnd(e) {
+      if (editing && editing.el.contains(e.target)) return;
+      if (e.target.closest('.edit-actions')) return;
+      const t = e.changedTouches[0];
+      const now = Date.now();
+      const near = Math.abs(t.clientX - lastTap.x) < 30 && Math.abs(t.clientY - lastTap.y) < 30;
+      if (now - lastTap.time < 350 && near) {
+          e.preventDefault();
+          lastTap.time = 0;
+          lastTouchEditAt = now;
+          const target = document.elementFromPoint(t.clientX, t.clientY) || e.target;
+          // The first tap of a double-tap already selected the option; put the answer back.
+          if (target.closest('.option-text') && now - lastSelect.time < 500) {
+              examData.questions[currentQuestionIndex].selectedIndex = lastSelect.prev;
+              refreshOptions();
+              saveState();
+          }
+          editTarget(target);
+      } else {
+          lastTap = { time: now, x: t.clientX, y: t.clientY };
+      }
   }
 
+  // ---------- timer ----------
   function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
       updateTimerDisplay();
+      updateTimerWarnings();
+      if (remainingSeconds <= 0 || submitted) return;
       timerInterval = setInterval(() => {
+          if (editing && editing.el.id === 'timer-display') return;
           if (remainingSeconds > 0) {
               remainingSeconds--;
               updateTimerDisplay();
               updateTimerWarnings();
               saveState();
-          } else {
+          }
+          if (remainingSeconds <= 0) {
               clearInterval(timerInterval);
-              handleTimeUp();
+              timerInterval = null;
+              endSession('Time Is Up');
           }
       }, 1000);
   }
 
+  function formatTime(s) {
+      const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+      return [h, m, sec].map(v => String(v).padStart(2, '0')).join(':');
+  }
+
   function updateTimerDisplay() {
-      const hours = Math.floor(remainingSeconds / 3600);
-      const minutes = Math.floor((remainingSeconds % 3600) / 60);
-      const seconds = remainingSeconds % 60;
-      document.getElementById('timer-display').textContent =
-          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      if (editing && editing.el.id === 'timer-display') return;
+      document.getElementById('timer-display').textContent = formatTime(remainingSeconds);
   }
 
   function updateTimerWarnings() {
-      const timerContainer = document.getElementById('timer-container');
-      timerContainer.classList.remove('warning', 'critical');
-      if (remainingSeconds <= 300) {
-          timerContainer.classList.add('critical');
-      } else if (remainingSeconds <= 600) {
-          timerContainer.classList.add('warning');
-      }
+      const el = document.getElementById('timer-container');
+      el.classList.toggle('critical', remainingSeconds > 0 && remainingSeconds <= 300);
+      el.classList.toggle('warning', remainingSeconds > 300 && remainingSeconds <= 600);
   }
 
-  function handleTimeUp() {
-      document.getElementById('time-up-overlay').style.display = 'flex';
-      document.querySelectorAll('button, .option, input, textarea').forEach(el => {
-          el.style.pointerEvents = 'none';
-          el.style.opacity = '0.6';
-      });
-      if ('Notification' in window && Notification.permission === 'granted') {
-          new Notification('انتهى وقت الاختبار!', {
-              body: 'تم انتهاء الوقت المخصص للاختبار',
-              icon: '/favicon.ico'
-          });
-      }
+  // ---------- menus & overlays ----------
+  function openMenu(menuId, anchor) {
+      const menu = document.getElementById(menuId);
+      const wasOpen = menu.classList.contains('show');
+      closeMenus();
+      if (wasOpen) return;
+      menu.classList.add('show');
+      const r = anchor.getBoundingClientRect();
+      const left = Math.min(r.left + r.width / 2 - menu.offsetWidth / 2, window.innerWidth - menu.offsetWidth - 12);
+      menu.style.left = Math.max(12, left) + 'px';
+      menu.style.top = (r.bottom + 6) + 'px';
   }
 
+  function closeMenus() {
+      document.querySelectorAll('.menu.show').forEach(m => m.classList.remove('show'));
+  }
+
+  function showOverlay(id) { document.getElementById(id).classList.add('show'); }
+  function hideOverlay(id) { document.getElementById(id).classList.remove('show'); }
+
+  function counts() {
+      const answered = examData.questions.filter(q => q.selectedIndex !== null).length;
+      const flagged = examData.questions.filter(q => q.flagged).length;
+      return { answered, flagged, total: examData.questions.length };
+  }
+
+  function askSubmit() {
+      const c = counts();
+      const left = c.total - c.answered;
+      document.getElementById('confirm-text').textContent =
+          `You answered ${c.answered} of ${c.total} questions` +
+          (left ? ` (${left} unanswered)` : '') +
+          (c.flagged ? ` and flagged ${c.flagged}.` : '.');
+      showOverlay('confirm-overlay');
+  }
+
+  function endSession(title) {
+      exitEditMode(true);
+      submitted = true;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      const c = counts();
+      document.getElementById('end-title').textContent = title;
+      document.getElementById('sum-answered').textContent = `${c.answered}/${c.total}`;
+      document.getElementById('sum-flagged').textContent = c.flagged;
+      document.getElementById('sum-time').textContent = formatTime(remainingSeconds);
+      hideOverlay('confirm-overlay');
+      showOverlay('end-overlay');
+  }
+
+  function restartSession() {
+      examData.questions.forEach(q => { q.selectedIndex = null; q.flagged = false; q.struck = [false, false, false, false]; });
+      remainingSeconds = examData.durationSeconds;
+      submitted = false;
+      hideOverlay('end-overlay');
+      currentQuestionIndex = 0;
+      displayCurrentQuestion();
+      saveState();
+      startTimer();
+  }
+
+  function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // ---------- wiring ----------
   function setupEventListeners() {
-      document.getElementById('prev-btn').addEventListener('click', () => {
-          if (currentQuestionIndex > 0) {
-              navigateToQuestion(currentQuestionIndex - 1);
+      document.getElementById('prev-btn').addEventListener('click', () => navigateToQuestion(currentQuestionIndex - 1));
+      document.getElementById('next-btn').addEventListener('click', () => navigateToQuestion(currentQuestionIndex + 1));
+      document.getElementById('flag-btn').addEventListener('click', () => { if (!editing) toggleFlag(); });
+
+      document.getElementById('controls-btn').addEventListener('click', (e) => { e.stopPropagation(); openMenu('controls-menu', e.currentTarget); });
+      document.getElementById('toolkit-btn').addEventListener('click', (e) => { e.stopPropagation(); openMenu('toolkit-menu', e.currentTarget); });
+      document.addEventListener('click', (e) => { if (!e.target.closest('.menu')) closeMenus(); });
+
+      document.querySelectorAll('.menu-item').forEach(item => item.addEventListener('click', () => {
+          closeMenus();
+          switch (item.dataset.action) {
+              case 'notices': showOverlay('notices-overlay'); break;
+              case 'hide': document.getElementById('hide-screen').classList.add('show'); break;
+              case 'submit': askSubmit(); break;
+              case 'reset-answers':
+                  examData.questions.forEach(q => { q.selectedIndex = null; q.struck = [false, false, false, false]; });
+                  displayCurrentQuestion(); saveState(); showToast('Answers cleared');
+                  break;
+              case 'restart-timer':
+                  remainingSeconds = examData.durationSeconds; submitted = false; saveState(); startTimer(); showToast('Timer restarted');
+                  break;
           }
-      });
-      document.getElementById('next-btn').addEventListener('click', () => {
-          if (currentQuestionIndex < examData.questions.length - 1) {
-              navigateToQuestion(currentQuestionIndex + 1);
-          }
-      });
-      document.getElementById('app-title').addEventListener('dblclick', editTopTitle);
-      document.getElementById('middle-title').addEventListener('dblclick', editMiddleTitle);
-      document.getElementById('question-text').addEventListener('dblclick', editQuestion);
+      }));
+
+      document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.overlay').classList.remove('show')));
+      document.getElementById('confirm-submit').addEventListener('click', () => endSession('Session Ended'));
+      document.getElementById('review-btn').addEventListener('click', () => hideOverlay('end-overlay'));
+      document.getElementById('restart-btn').addEventListener('click', restartSession);
+      document.getElementById('hide-screen').addEventListener('click', () => document.getElementById('hide-screen').classList.remove('show'));
+
+      document.addEventListener('touchend', handleTouchEnd, { passive: false });
       document.addEventListener('dblclick', (e) => {
-          if (e.target.classList.contains('option-text')) {
-              const optionIndex = parseInt(e.target.dataset.optionIndex);
-              editOption(optionIndex);
-          }
-      });
-      document.getElementById('timer-container').addEventListener('dblclick', (e) => {
+          if (Date.now() - lastTouchEditAt < 600) return;
+          if (editing && editing.el.contains(e.target)) return;
           e.preventDefault();
-          editTimer();
+          editTarget(e.target);
       });
+
       document.addEventListener('keydown', (e) => {
-          if (editingQuestion || editingOption !== -1 || editingTopTitle || editingMiddleTitle || editingTimer) return;
-          switch(e.key) {
-              case 'ArrowUp':
-                  e.preventDefault();
-                  if (currentQuestionIndex > 0) {
-                      navigateToQuestion(currentQuestionIndex - 1);
-                  }
-                  break;
-              case 'ArrowDown':
-                  e.preventDefault();
-                  if (currentQuestionIndex < examData.questions.length - 1) {
-                      navigateToQuestion(currentQuestionIndex + 1);
-                  }
-                  break;
-              case '1':
-              case '2':
-              case '3':
-              case '4':
-                  e.preventDefault();
-                  const optionIndex = parseInt(e.key) - 1;
-                  if (optionIndex < examData.questions[currentQuestionIndex].choices.length) {
-                      selectOption(optionIndex);
-                  }
-                  break;
-          }
+          if (editing || document.querySelector('.overlay.show')) return;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigateToQuestion(currentQuestionIndex + 1); }
+          else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigateToQuestion(currentQuestionIndex - 1); }
+          else if (['1', '2', '3', '4'].includes(e.key)) { e.preventDefault(); selectOption(parseInt(e.key, 10) - 1); }
       });
-      if ('Notification' in window && Notification.permission === 'default') {
-          Notification.requestPermission();
-      }
+
+      document.addEventListener('gesturestart', e => e.preventDefault());
   }
-
-  document.addEventListener('touchmove', function(e) {
-      if (e.scale !== 1) {
-          e.preventDefault();
-      }
-  }, { passive: false });
-
-  let lastTouchEnd = 0;
-  document.addEventListener('touchend', function(e) {
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-          e.preventDefault();
-      }
-      lastTouchEnd = now;
-  }, false);
 
   if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/service-worker.js')
-              .then(function(registration) {
-                  console.log('ServiceWorker registration successful');
-              }, function(err) {
-                  console.log('ServiceWorker registration failed: ', err);
-              });
-      });
+      window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(() => {}));
   }
 </script>
 </body>

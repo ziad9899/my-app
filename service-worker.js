@@ -1,29 +1,32 @@
-const CACHE_NAME = 'exam-app-v1';
+const CACHE_NAME = 'exam-sim-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  './',
+  './index.html',
+  './manifest.json'
 ];
 
 self.addEventListener('install', function(event) {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
+// Network first so new deploys show up; cache is the offline fallback.
 self.addEventListener('fetch', function(event) {
+  if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(function(response) {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(function(cache) { cache.put(event.request, copy); });
+        return response;
+      })
+      .catch(function() {
+        return caches.match(event.request);
+      })
   );
 });
 
@@ -37,6 +40,6 @@ self.addEventListener('activate', function(event) {
           }
         })
       );
-    })
+    }).then(function() { return self.clients.claim(); })
   );
 });
