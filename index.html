@@ -570,6 +570,80 @@
     .summary-cell b { display: block; font-size: 26px; margin-bottom: 4px; }
     .summary-cell span { color: var(--muted); font-size: 13px; }
 
+    /* ---------- completion screen ---------- */
+    .done-screen {
+        position: fixed;
+        left: 0; right: 0; bottom: 0;
+        top: calc(60px + env(safe-area-inset-top));
+        z-index: 900;
+        background: #4CE03C;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    .done-screen.show { display: flex; }
+    body.is-done .right-section { visibility: hidden; }
+
+    .done-card {
+        display: grid;
+        grid-template-columns: 1fr 1.25fr;
+        width: min(780px, 100%);
+        min-height: 300px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .done-left {
+        background: #545456;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .done-left svg { width: 150px; height: 150px; }
+
+    .done-right {
+        background: #1C1C1E;
+        padding: 34px 32px 28px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .done-right h2 { font-size: 28px; font-weight: 600; margin-bottom: 10px; }
+    .done-right p { font-size: 16px; color: var(--muted); line-height: 1.45; }
+
+    .done-actions {
+        margin-top: auto;
+        padding-top: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .done-actions button {
+        border: none;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        height: 46px;
+        border-radius: 23px;
+        cursor: pointer;
+    }
+
+    .done-review { background: var(--accent); }
+    .done-restart { background: #45C83A; }
+
+    @media (max-width: 640px) {
+        .done-card { grid-template-columns: 1fr; }
+        .done-left { padding: 26px 0; }
+        .done-left svg { width: 96px; height: 96px; }
+    }
+
     .hide-screen {
         position: fixed;
         inset: 0;
@@ -717,18 +791,18 @@
   </div>
 </div>
 
-<div class="overlay" id="end-overlay">
-  <div class="dialog">
-    <h2 id="end-title">Session Ended</h2>
-    <p>Here is a summary of this session.</p>
-    <div class="summary-grid">
-      <div class="summary-cell"><b id="sum-answered">0</b><span>Answered</span></div>
-      <div class="summary-cell"><b id="sum-flagged">0</b><span>Flagged</span></div>
-      <div class="summary-cell"><b id="sum-time">00:00:00</b><span>Time Left</span></div>
+<div class="done-screen" id="end-overlay">
+  <div class="done-card">
+    <div class="done-left">
+      <svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="44"/><path d="M31 52l13 13 26-30"/></svg>
     </div>
-    <div class="dialog-actions">
-      <button class="btn-secondary" id="review-btn">Review</button>
-      <button class="btn-primary" id="restart-btn">Start Again</button>
+    <div class="done-right">
+      <h2 id="end-title">Practice Complete</h2>
+      <p id="end-text">Your practice session has ended.</p>
+      <div class="done-actions">
+        <button class="done-review" id="review-btn">Review Answers</button>
+        <button class="done-restart" id="restart-btn">Start Again</button>
+      </div>
     </div>
   </div>
 </div>
@@ -943,7 +1017,7 @@
   // ---------- editing (double-tap) ----------
   // Inline edit of any text node. `commit` receives the trimmed new text.
   function startEdit(el, { multiline = false, allowEmpty = false, commit }) {
-      if (editing || submitted) return;
+      if (editing || (submitted && !el.closest('.top-bar'))) return;
       closeMenus();
       const original = el.textContent;
       el.contentEditable = 'true';
@@ -1170,11 +1244,11 @@
       timerInterval = null;
       const c = counts();
       document.getElementById('end-title').textContent = title;
-      document.getElementById('sum-answered').textContent = `${c.answered}/${c.total}`;
-      document.getElementById('sum-flagged').textContent = c.flagged;
-      document.getElementById('sum-time').textContent = formatTime(remainingSeconds);
+      document.getElementById('end-text').textContent =
+          `Your practice session has ended. You answered ${c.answered} of ${c.total} questions.`;
       hideOverlay('confirm-overlay');
       showOverlay('end-overlay');
+      document.body.classList.add('is-done');
   }
 
   function restartSession() {
@@ -1182,6 +1256,7 @@
       remainingSeconds = examData.durationSeconds;
       submitted = false;
       hideOverlay('end-overlay');
+      document.body.classList.remove('is-done');
       currentQuestionIndex = 0;
       displayCurrentQuestion();
       saveState();
@@ -1223,8 +1298,8 @@
       }));
 
       document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.overlay').classList.remove('show')));
-      document.getElementById('confirm-submit').addEventListener('click', () => endSession('Session Ended'));
-      document.getElementById('review-btn').addEventListener('click', () => hideOverlay('end-overlay'));
+      document.getElementById('confirm-submit').addEventListener('click', () => endSession('Practice Complete'));
+      document.getElementById('review-btn').addEventListener('click', () => { hideOverlay('end-overlay'); document.body.classList.remove('is-done'); });
       document.getElementById('restart-btn').addEventListener('click', restartSession);
       document.getElementById('hide-screen').addEventListener('click', () => document.getElementById('hide-screen').classList.remove('show'));
 
@@ -1237,7 +1312,7 @@
       });
 
       document.addEventListener('keydown', (e) => {
-          if (editing || document.querySelector('.overlay.show')) return;
+          if (editing || document.querySelector('.overlay.show, .done-screen.show')) return;
           if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigateToQuestion(currentQuestionIndex + 1); }
           else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigateToQuestion(currentQuestionIndex - 1); }
           else if (['1', '2', '3', '4'].includes(e.key)) { e.preventDefault(); selectOption(parseInt(e.key, 10) - 1); }
