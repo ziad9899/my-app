@@ -7,20 +7,20 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Exam">
-  <meta name="theme-color" content="#5A5E66">
+  <meta name="theme-color" content="#2C2C2E">
   <title>Exam</title>
   <link rel="manifest" href="manifest.json">
 
   <style>
     :root {
-        --bar: #5A5E66;
-        --side: #4E525A;
-        --navy-top: #1A2238;
-        --navy-bottom: #261C3A;
+        --bar: #2C2C2E;
+        --side: #232325;
+        --navy-top: #000000;
+        --navy-bottom: #0A0A0C;
         --accent: #1EA7FD;
         --accent-dark: #148AD6;
-        --pill: rgba(120, 124, 134, 0.55);
-        --pill-border: rgba(255, 255, 255, 0.28);
+        --pill: #2E2E31;
+        --pill-border: rgba(255, 255, 255, 0.22);
         --text: #FFFFFF;
         --muted: rgba(255, 255, 255, 0.72);
         --divider: rgba(255, 255, 255, 0.35);
@@ -74,7 +74,7 @@
         align-items: center;
         gap: 14px;
         min-width: 0;
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 600;
     }
 
@@ -87,7 +87,7 @@
     }
 
     .middle-section {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 600;
         text-align: center;
         white-space: nowrap;
@@ -103,7 +103,7 @@
         align-items: center;
         justify-content: flex-end;
         gap: 22px;
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 700;
         letter-spacing: 0.2px;
     }
@@ -151,7 +151,7 @@
         position: fixed;
         z-index: 500;
         min-width: 250px;
-        background: rgba(98, 102, 112, 0.92);
+        background: rgba(58, 58, 61, 0.94);
         -webkit-backdrop-filter: blur(18px);
         backdrop-filter: blur(18px);
         border: 1px solid rgba(255, 255, 255, 0.22);
@@ -225,14 +225,14 @@
     .question-nav::-webkit-scrollbar { display: none; }
 
     .question-btn {
-        width: 70px;
-        height: 70px;
+        width: 62px;
+        height: 62px;
         flex-shrink: 0;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 600;
         cursor: pointer;
         position: relative;
@@ -282,12 +282,12 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: #5F636B;
+        background: #3A3A3D;
         border: none;
         color: var(--text);
-        font: 600 16px/1 inherit;
+        font: 600 15px/1 inherit;
         font-family: inherit;
-        padding: 11px 18px;
+        padding: 10px 16px;
         border-radius: 22px;
         cursor: pointer;
     }
@@ -306,7 +306,7 @@
 
     .section-label, .question-number {
         color: var(--accent);
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 500;
         padding: 2px 2px;
         border-radius: 4px;
@@ -327,7 +327,7 @@
     .head-icons svg { width: 22px; height: 22px; }
 
     .question-text {
-        font-size: 19px;
+        font-size: 16px;
         font-weight: 500;
         line-height: 1.45;
         margin-top: 22px;
@@ -344,9 +344,9 @@
     }
 
     .answers-label {
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 700;
-        margin: 26px 0 26px;
+        margin: 24px 0 24px;
         padding: 2px 2px;
         border-radius: 4px;
         display: inline-block;
@@ -367,7 +367,7 @@
         display: flex;
         align-items: center;
         gap: 20px;
-        min-height: 68px;
+        min-height: 60px;
     }
 
     .option.selected {
@@ -382,14 +382,14 @@
 
     .option-letter {
         font-weight: 700;
-        font-size: 20px;
+        font-size: 17px;
         min-width: 22px;
         flex-shrink: 0;
     }
 
     .option-text {
         flex: 1;
-        font-size: 17px;
+        font-size: 15px;
         line-height: 1.4;
         padding: 3px 4px;
         border-radius: 4px;
@@ -407,7 +407,7 @@
         color: var(--text);
     }
 
-    .option-eye svg { width: 30px; height: 30px; }
+    .option-eye svg { width: 26px; height: 26px; }
 
     /* ---------- bottom bar ---------- */
     .bottom-bar {
@@ -424,20 +424,20 @@
         height: 56px;
         border-radius: 28px;
         font-family: inherit;
-        font-size: 19px;
+        font-size: 18px;
         font-weight: 500;
         cursor: pointer;
         border: none;
     }
 
     .nav-btn.previous {
-        background: #C9CACE;
+        background: #48484B;
         color: var(--accent);
     }
 
     .nav-btn.previous:disabled {
-        color: rgba(255, 255, 255, 0.85);
-        background: #B4B6BB;
+        color: rgba(255, 255, 255, 0.55);
+        background: #3A3A3D;
         cursor: default;
     }
 
@@ -449,7 +449,7 @@
     .nav-btn.next:disabled { opacity: 0.55; cursor: default; }
 
     .question-counter {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
         white-space: nowrap;
         min-width: 70px;
@@ -521,7 +521,7 @@
     .overlay.show { display: flex; }
 
     .dialog {
-        background: #2A3045;
+        background: #1C1C1E;
         border: 1px solid rgba(255, 255, 255, 0.16);
         border-radius: 16px;
         padding: 28px 30px;
@@ -549,7 +549,7 @@
         cursor: pointer;
     }
 
-    .btn-secondary { background: #5F636B; color: #fff; }
+    .btn-secondary { background: #3A3A3D; color: #fff; }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-danger { background: var(--danger); color: #fff; }
 
