@@ -328,7 +328,7 @@
 
     .question-text {
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 700;
         line-height: 1.45;
         margin-top: 22px;
         padding: 6px 4px;
@@ -355,7 +355,7 @@
     .options {
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 10px;
     }
 
     .option {
@@ -390,6 +390,7 @@
     .option-text {
         flex: 1;
         font-size: 15px;
+        font-weight: 600;
         line-height: 1.4;
         padding: 3px 4px;
         border-radius: 4px;
@@ -636,6 +637,21 @@
     }
 
     .done-review { background: var(--accent); }
+
+    .feedback-text {
+        width: 100%;
+        margin-top: 8px;
+        background: #2E2E31;
+        color: #fff;
+        border: 1px solid var(--pill-border);
+        border-radius: 10px;
+        padding: 12px;
+        font-family: inherit;
+        font-size: 16px;
+        resize: none;
+        -webkit-user-select: text;
+        user-select: text;
+    }
     .done-restart { background: #45C83A; }
 
     @media (max-width: 640px) {
@@ -797,12 +813,23 @@
       <svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="44"/><path d="M31 52l13 13 26-30"/></svg>
     </div>
     <div class="done-right">
-      <h2 id="end-title">Practice Complete</h2>
-      <p id="end-text">Your practice session has ended.</p>
+      <h2 id="end-title">Exam Complete</h2>
+      <p id="end-text">Your practice exam has ended.</p>
       <div class="done-actions">
-        <button class="done-review" id="review-btn">Review Answers</button>
-        <button class="done-restart" id="restart-btn">Start Again</button>
+        <button class="done-review" id="feedback-btn">Leave Feedback</button>
+        <button class="done-restart" id="restart-btn">Close Exam</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="feedback-overlay">
+  <div class="dialog">
+    <h2>Leave Feedback</h2>
+    <textarea class="feedback-text" id="feedback-text" rows="4" placeholder="Write your feedback"></textarea>
+    <div class="dialog-actions">
+      <button class="btn-secondary" data-close>Cancel</button>
+      <button class="btn-primary" id="feedback-send">Send</button>
     </div>
   </div>
 </div>
@@ -1244,8 +1271,6 @@
       timerInterval = null;
       const c = counts();
       document.getElementById('end-title').textContent = title;
-      document.getElementById('end-text').textContent =
-          `Your practice session has ended. You answered ${c.answered} of ${c.total} questions.`;
       hideOverlay('confirm-overlay');
       showOverlay('end-overlay');
       document.body.classList.add('is-done');
@@ -1298,8 +1323,9 @@
       }));
 
       document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('.overlay').classList.remove('show')));
-      document.getElementById('confirm-submit').addEventListener('click', () => endSession('Practice Complete'));
-      document.getElementById('review-btn').addEventListener('click', () => { hideOverlay('end-overlay'); document.body.classList.remove('is-done'); });
+      document.getElementById('confirm-submit').addEventListener('click', () => endSession('Exam Complete'));
+      document.getElementById('feedback-btn').addEventListener('click', () => { document.getElementById('feedback-text').value = ''; showOverlay('feedback-overlay'); });
+      document.getElementById('feedback-send').addEventListener('click', () => { hideOverlay('feedback-overlay'); showToast('Thank you for your feedback'); });
       document.getElementById('restart-btn').addEventListener('click', restartSession);
       document.getElementById('hide-screen').addEventListener('click', () => document.getElementById('hide-screen').classList.remove('show'));
 
