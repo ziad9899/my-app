@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exam-sim-v6';
+const CACHE_NAME = 'exam-sim-v7';
 const urlsToCache = [
   './',
   './index.html',

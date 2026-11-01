@@ -191,7 +191,7 @@
     }
 
     .left-sidebar {
-        width: 104px;
+        width: 80px;
         flex-shrink: 0;
         background-color: var(--side);
         display: flex;
@@ -217,28 +217,28 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 18px;
-        padding: 16px 0 24px;
+        gap: 14px;
+        padding: 14px 0 24px;
         scrollbar-width: none;
     }
 
     .question-nav::-webkit-scrollbar { display: none; }
 
     .question-btn {
-        width: 62px;
-        height: 62px;
+        width: 46px;
+        height: 46px;
         flex-shrink: 0;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 600;
         cursor: pointer;
         position: relative;
         background: transparent;
         color: var(--text);
-        border: 4px solid #F2F2F4;
+        border: 2.5px solid #F2F2F4;
         font-family: inherit;
     }
 
@@ -327,7 +327,7 @@
     .head-icons svg { width: 22px; height: 22px; }
 
     .question-text {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 700;
         line-height: 1.45;
         margin-top: 22px;
@@ -362,7 +362,7 @@
         background: var(--pill);
         border: 1.5px solid var(--pill-border);
         border-radius: 30px;
-        padding: 10px 18px 10px 24px;
+        padding: 5px 14px 5px 22px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -382,14 +382,14 @@
 
     .option-letter {
         font-weight: 700;
-        font-size: 17px;
-        min-width: 22px;
+        font-size: 15px;
+        min-width: 18px;
         flex-shrink: 0;
     }
 
     .option-text {
         flex: 1;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 600;
         line-height: 1.4;
         padding: 3px 4px;
@@ -399,8 +399,8 @@
 
     .option-eye {
         flex-shrink: 0;
-        width: 40px;
-        height: 40px;
+        width: 34px;
+        height: 34px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -408,7 +408,7 @@
         color: var(--text);
     }
 
-    .option-eye svg { width: 26px; height: 26px; }
+    .option-eye svg { width: 22px; height: 22px; }
 
     /* ---------- bottom bar ---------- */
     .bottom-bar {
@@ -417,15 +417,15 @@
         display: flex;
         align-items: center;
         gap: 28px;
-        padding: 14px max(22px, env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left));
+        padding: 10px max(22px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left));
     }
 
     .nav-btn {
         flex: 1;
-        height: 56px;
-        border-radius: 28px;
+        height: 38px;
+        border-radius: 19px;
         font-family: inherit;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 500;
         cursor: pointer;
         border: none;
@@ -450,7 +450,7 @@
     .nav-btn.next:disabled { opacity: 0.55; cursor: default; }
 
     .question-counter {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
         white-space: nowrap;
         min-width: 70px;
@@ -678,8 +678,8 @@
     .hide-screen svg { width: 46px; height: 46px; }
 
     @media (max-width: 900px) {
-        .left-sidebar { width: 76px; }
-        .question-btn { width: 50px; height: 50px; font-size: 19px; border-width: 3px; }
+        .left-sidebar { width: 68px; }
+        .question-btn { width: 42px; height: 42px; font-size: 16px; }
         .right-section { gap: 14px; font-size: 14px; }
         .left-section, .middle-section { font-size: 14px; }
     }
@@ -692,7 +692,7 @@
         .content-scroll { padding: 12px 16px 20px 14px; }
         .question-divider { margin: 22px -16px 0 -14px; }
         .bottom-bar { gap: 12px; }
-        .nav-btn { font-size: 16px; height: 48px; }
+        .nav-btn { font-size: 15px; height: 36px; }
         .question-counter { font-size: 16px; min-width: 52px; }
     }
   </style>
